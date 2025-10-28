@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToolScout - Discover the Best SaaS Tools</title>
+    <meta name="description" content="Curated directory of quality SaaS tools for founders, freelancers, and small teams.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <div id="app"></div>
+
+    <script type="module">
+        // Tools Database
+        const tools = [
+            {
+                name: "Notion",
+                tagline: "All-in-one workspace for notes, docs, and projects",
+                category: "Productivity",
+                pricing: "Free / €10/mo",
+                website: "https://notion.so",
+                description: "Notion combines notes, tasks, wikis, and databases in one flexible workspace. Great for organizing everything from personal tasks to team projects.",
+                logo: "🗒️",
+                featured: true,
+                iUseThis: true
+            },
+            {
+                name: "Vercel",
+                tagline: "Deploy web apps instantly",
+                category: "Developer Tools",
+                pricing: "Free / €20/mo",
+                website: "https://vercel.com",
+                description: "Deploy Next.js, React, and static sites with zero configuration. The free tier handles most projects without breaking a sweat.",
+                logo: "▲",
+                featured: true,
+                iUseThis: true
+            },
+            {
+                name: "ConvertKit",
+                tagline: "Email marketing for creators",
+                category: "Marketing",
+                pricing: "Free / €25/mo",
+                website: "https://convertkit.com",
+                description: "Email marketing focused on creators and bloggers. Simple automation, landing pages, and subscriber tagging included.",
+                logo: "📧",
+                featured: true,
+                iUseThis: false
+            },
+            {
+                name: "Figma",
+                tagline: "Collaborative design tool",
+                category: "Design",
+                pricing: "Free / €12/mo",
+                website: "https://figma.com",
+                description: "Browser-based design tool with real-time collaboration. Industry standard for UI/UX design with generous free tier.",
+                logo: "🎨",
+                featured: true,
+                iUseThis: true
+            },
+            {
+                name: "Fathom Analytics",
+                tagline: "Simple, privacy-first analytics",
+                category: "Analytics",
+                pricing: "€14/mo",
+                website: "https://usefathom.com",
+                description: "Google Analytics alternative without cookies or GDPR headaches. Clean dashboard with essential metrics only.",
+                logo: "📊",
+                featured: true,
+                iUseThis: true
+            },
+            {
+                name: "Stripe",
+                tagline: "Payment infrastructure for the internet",
+                category: "Finance",
+                pricing: "2.9% + fees",
+                website: "https://stripe.com",
+                description: "Accept payments online with flexible APIs. Industry standard for subscription billing and one-time payments.",
+                logo: "💳",
+                featured: true,
+                iUseThis: true
+            },
+            {
+                name: "ChatGPT Plus",
+                tagline: "AI assistant that understands context",
+                category: "AI Tools",
+                pricing: "€20/mo",
+                website: "https://chat.openai.com",
+                description: "Access to GPT-4 with priority access during peak times. Essential tool for writing, coding, and brainstorming.",
+                logo: "🤖",
+                featured: true,
+                iUseThis: false
+            },
+            {
+                name: "Grammarly",
+                tagline: "Write with confidence",
+                category: "SEO & Content",
+                pricing: "Free / €12/mo",
+                website: "https://grammarly.com",
+                description: "AI writing assistant that checks grammar, tone, and clarity. Works everywhere you write across browsers and apps.",
+                logo: "✏️",
+                featured: true,
+                iUseThis: true
+            },
+            {
+                name: "Gumroad",
+                tagline: "Sell products directly to your audience",
+                category: "E-commerce",
+                pricing: "10% fee",
+                website: "https://gumroad.com",
+                description: "Simple platform for selling digital products, memberships, and courses. No monthly fees, just 10% per sale.",
+                logo: "🛒",
+                featured: true,
+                iUseThis: false
+            },
+            {
+                name: "Zapier",
+                tagline: "Connect your apps and automate workflows",
+                category: "Automation",
+                pricing: "Free / €20/mo",
+                website: "https://zapier.com",
+                description: "Automate tasks between 5,000+ apps without code. Free tier includes 100 tasks per month.",
+                logo: "⚡",
+                featured: true,
+                iUseThis: true
+            },
+            {
+                name: "Linear",
+                tagline: "Issue tracking for modern software teams",
+                category: "Developer Tools",
+                pricing: "Free / €8/mo",
+                website: "https://linear.app",
+                description: "Beautiful project management tool built for software teams. Lightning-fast interface with GitHub integration.",
+                logo: "📐",
+                featured: false,
+                iUseThis: true
+            },
+            {
+                name: "Obsidian",
+                tagline: "Powerful knowledge base on local markdown files",
+                category: "Productivity",
+                pricing: "Free / €8/mo",
+                website: "https://obsidian.md",
+                description: "A private and flexible writing app that adapts to the way you think. Works with local markdown files.",
+                logo: "💎",
+                featured: false,
+                iUseThis: true
+            },
+            {
+                name: "Todoist",
+                tagline: "Simple yet powerful task management",
+                category: "Productivity",
+                pricing: "Free / €5/mo",
+                website: "https://todoist.com",
+                description: "Clean task manager that works across all your devices. Perfect for keeping track of tasks without complexity.",
+                logo: "✓",
+                featured: false,
+                iUseThis: false
+            },
+            {
+                name: "Beehiiv",
+                tagline: "Newsletter platform built for growth",
+                category: "Marketing",
+                pricing: "Free / €49/mo",
+                website: "https://beehiiv.com",
+                description: "Modern newsletter platform with referral programs, monetization, and analytics.",
+                logo: "🐝",
+                featured: false,
+                iUseThis: false
+            },
+            {
+                name: "Canva Pro",
+                tagline: "Design graphics like a pro",
+                category: "Design",
+                pricing: "Free / €11/mo",
+                website: "https://canva.com",
+                description: "Drag-and-drop design tool with templates for social media and marketing. Perfect for non-designers.",
+                logo: "🎭",
+                featured: false,
+                iUseThis: false
+            },
+            {
+                name: "Plausible",
+                tagline: "Lightweight and privacy-friendly analytics",
+                category: "Analytics",
+                pricing: "€9/mo",
+                website: "https://plausible.io",
+                description: "Open-source analytics with a script 45x smaller than Google Analytics. GDPR compliant.",
+                logo: "📈",
+                featured: false,
+                iUseThis: false
+            },
+            {
+                name: "Lemon Squeezy",
+                tagline: "Payments for digital products",
+                category: "Finance",
+                pricing: "5% + fees",
+                website: "https://lemonsqueezy.com",
+                description: "Merchant of record for digital products. They handle taxes, VAT, and compliance.",
+                logo: "🍋",
+                featured: false,
+                iUseThis: false
+            },
+            {
+                name: "Claude Pro",
+                tagline: "AI assistant for work",
+                category: "AI Tools",
+                pricing: "€20/mo",
+                website: "https://claude.ai",
+                description: "Anthropic's AI assistant with larger context windows. Great for analyzing documents.",
+                logo: "🧠",
+                featured: false,
+                iUseThis: true
+            },
+            {
+                name: "Slack",
+                tagline: "Where work happens",
+                category: "Communication",
+                pricing: "Free / €7/mo",
+                website: "https://slack.com",
+                description: "Team messaging with channels, integrations, and search. Free plan works great for small teams.",
+                logo: "💬",
+                featured: false,
+                iUseThis: true
+            },
+            {
+                name: "1Password",
+                tagline: "Password manager for families and teams",
+                category: "Security",
+                pricing: "€3/mo",
+                website: "https://1password.com",
+                description: "Secure password manager with excellent UX. Family plan covers 5 people with shared vaults.",
+                logo: "🔐",
+                featured: false,
+                iUseThis: true
+            }
+        ];
+
+        const categories = ["All", "Productivity", "Developer Tools", "Marketing", "Design", "Analytics", "Finance", "AI Tools", "Communication", "Security", "E-commerce", "Automation", "SEO & Content"];
+
+        let currentPage = 'home';
+        let searchTerm = '';
+        let selectedCategory = 'All';
+
+        function filterTools() {
+            return tools.filter(tool => {
+                const matchesSearch = tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                    tool.tagline.toLowerCase().includes(searchTerm.toLowerCase());
+                const matchesCategory = selectedCategory === 'All' || tool.category === selectedCategory;
+                return matchesSearch && matchesCategory;
+            });
+        }
+
+        function renderNav() {
+            return `
+                <nav class="bg-white border-b sticky top-0 z-50 shadow-sm">
+                    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+                        <div class="flex items-center gap-2 cursor-pointer hover:opacity-80" onclick="showPage('home')">
+                            <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                                <path d="M12 8v8m4-4H8" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            <span class="text-2xl font-bold text-indigo-600">ToolScout</span>
+                        </div>
+                        <div class="flex gap-6">
+                            <button onclick="showPage('home')" class="font-medium ${currentPage === 'home' ? 'text-indigo-600' : 'text-gray-700 hover:text-indigo-600'}">Home</button>
+                            <button onclick="showPage('directory')" class="font-medium ${currentPage === 'directory' ? 'text-indigo-600' : 'text-gray-700 hover:text-indigo-600'}">Directory</button>
+                            <button onclick="showPage('about')" class="font-medium ${currentPage === 'about' ? 'text-indigo-600' : 'text-gray-700 hover:text-indigo-600'}">About</button>
+                        </div>
+                    </div>
+                </nav>
+            `;
+        }
+
+        function renderHomePage() {
+            const featuredTools = tools.filter(t => t.featured);
+            return `
+                <div class="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 text-white py-20 px-4">
+                    <div class="max-w-4xl mx-auto text-center">
+                        <h1 class="text-5xl font-bold mb-4">Scout the Best SaaS Tools</h1>
+                        <p class="text-xl mb-8 opacity-90">
+                            Discover handpicked SaaS tools for founders, freelancers, and small teams. 
+                            No enterprise bloat. Just quality tools that help you build and grow.
+                        </p>
+                        <div class="flex gap-4 justify-center flex-wrap">
+                            <button onclick="showPage('directory')" class="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 shadow-lg">
+                                Browse ${tools.length}+ Tools
+                            </button>
+                        </div>
+                        <div class="mt-8 text-sm opacity-75">
+                            Transparent affiliate disclosure: Some links may earn commissions at no extra cost to you
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 py-16 px-4">
+                    <div class="max-w-7xl mx-auto">
+                        <h2 class="text-3xl font-bold mb-8 flex items-center gap-2">
+                            <span>⭐</span> Featured Tools
+                        </h2>
+                        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                            ${featuredTools.map(tool => renderToolCard(tool)).join('')}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="py-16 px-4">
+                    <div class="max-w-6xl mx-auto">
+                        <h2 class="text-3xl font-bold mb-8 text-center">Browse by Category</h2>
+                        <div class="grid md:grid-cols-4 gap-4">
+                            ${categories.slice(1, 9).map(cat => `
+                                <button onclick="selectedCategory='${cat}'; showPage('directory')" 
+                                        class="bg-white border-2 border-gray-200 p-6 rounded-lg hover:border-indigo-500 hover:shadow-md transition text-left">
+                                    <div class="text-2xl mb-2">${getCategoryEmoji(cat)}</div>
+                                    <div class="font-semibold text-lg">${cat}</div>
+                                    <div class="text-gray-600 text-sm mt-1">
+                                        ${tools.filter(t => t.category === cat).length} tools
+                                    </div>
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderDirectoryPage() {
+            const filtered = filterTools();
+            return `
+                <div class="max-w-7xl mx-auto px-4 py-8">
+                    <h1 class="text-4xl font-bold mb-8">All Tools</h1>
+                    
+                    <div class="mb-8 space-y-4">
+                        <input 
+                            type="text" 
+                            placeholder="Search tools..." 
+                            class="w-full px-4 py-3 border rounded-lg"
+                            oninput="searchTerm=this.value; render()"
+                        />
+                        
+                        <select class="w-full md:w-64 px-4 py-2 border rounded-lg" onchange="selectedCategory=this.value; render()">
+                            ${categories.map(cat => `<option value="${cat}" ${cat === selectedCategory ? 'selected' : ''}>${cat}</option>`).join('')}
+                        </select>
+                    </div>
+
+                    <div class="mb-4 text-gray-600">
+                        Showing ${filtered.length} tool${filtered.length !== 1 ? 's' : ''}
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        ${filtered.map(tool => renderToolCard(tool)).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderAboutPage() {
+            return `
+                <div class="max-w-3xl mx-auto px-4 py-8">
+                    <h1 class="text-4xl font-bold mb-6">About ToolScout</h1>
+                    
+                    <div class="prose prose-lg max-w-none">
+                        <p class="text-xl text-gray-600 mb-6">
+                            Hi, I'm Jakub. I created ToolScout to help founders and small teams discover quality SaaS tools 
+                            without wading through endless Product Hunt posts and marketing websites.
+                        </p>
+
+                        <div class="bg-indigo-50 border-l-4 border-indigo-600 p-6 mb-8">
+                            <h3 class="text-lg font-semibold mb-2">The Mission</h3>
+                            <p class="text-gray-700">
+                                Build a trusted resource for discovering SaaS tools that are actually useful for small businesses, 
+                                without enterprise pricing or unnecessary complexity.
+                            </p>
+                        </div>
+
+                        <h2 class="text-2xl font-bold mt-8 mb-4">Affiliate Disclosure</h2>
+                        <p class="mb-4 text-gray-700">
+                            This site contains affiliate links. When you purchase through these links, I may earn a commission 
+                            at no additional cost to you. I only list tools I genuinely recommend.
+                        </p>
+
+                        <h2 class="text-2xl font-bold mt-8 mb-4">Get in Touch</h2>
+                        <p class="mb-4 text-gray-700">
+                            Have suggestions? Want to submit a tool?
+                        </p>
+                        <div class="flex gap-4">
+                            <a href="mailto:hello@toolscout.co" class="text-indigo-600 hover:underline">hello@toolscout.co</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderToolCard(tool) {
+            return `
+                <div class="bg-white border border-gray-200 rounded-lg hover:shadow-lg transition h-full flex flex-col">
+                    <div class="p-4 border-b border-gray-100">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="text-3xl">${tool.logo}</div>
+                            ${tool.featured ? '<span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded font-semibold">⭐ Featured</span>' : ''}
+                        </div>
+                        <h3 class="font-bold text-lg mb-1">${tool.name}</h3>
+                        <p class="text-gray-600 text-xs">${tool.tagline}</p>
+                    </div>
+                    
+                    <div class="p-4 flex-1 flex flex-col">
+                        <p class="text-gray-700 text-sm mb-4 line-clamp-2 flex-1">${tool.description}</p>
+                        
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-green-600 font-bold text-xs">💰 ${tool.pricing}</span>
+                                <span class="text-xs bg-gray-100 px-2 py-1 rounded">${tool.category}</span>
+                            </div>
+                            
+                            ${tool.iUseThis ? '<span class="inline-flex items-center gap-1 bg-green-50 text-green-700 px-2 py-1 rounded text-xs font-semibold border border-green-200">✓ I use this</span>' : ''}
+                            
+                            <a href="${tool.website}" target="_blank" class="flex items-center justify-center gap-2 w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 font-semibold text-sm">
+                                View Tool →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getCategoryEmoji(cat) {
+            const emojis = {
+                'Productivity': '📝',
+                'Developer Tools': '💻',
+                'Marketing': '📧',
+                'Design': '🎨',
+                'Analytics': '📊',
+                'Finance': '💰',
+                'AI Tools': '🤖',
+                'Communication': '💬',
+                'Security': '🔐',
+                'E-commerce': '🛒',
+                'Automation': '⚡',
+                'SEO & Content': '🔍'
+            };
+            return emojis[cat] || '📦';
+        }
+
+        function showPage(page) {
+            currentPage = page;
+            render();
+        }
+
+        function render() {
+            const app = document.getElementById('app');
+            let content = '';
+            
+            if (currentPage === 'home') content = renderHomePage();
+            else if (currentPage === 'directory') content = renderDirectoryPage();
+            else if (currentPage === 'about') content = renderAboutPage();
+            
+            app.innerHTML = renderNav() + content + `
+                <footer class="bg-gray-900 text-white py-12 px-4 mt-16">
+                    <div class="max-w-6xl mx-auto text-center">
+                        <div class="flex items-center justify-center gap-2 mb-4">
+                            <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                                <path d="M12 8v8m4-4H8" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            <h3 class="font-bold text-lg">ToolScout</h3>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4">Curated directory of quality SaaS tools for founders and small teams.</p>
+                        <p class="text-gray-400 text-sm">© 2025 ToolScout. Built by Jakub.</p>
+                    </div>
+                </footer>
+            `;
+            
+            window.scrollTo(0, 0);
+        }
+
+        // Make functions global
+        window.showPage = showPage;
+        window.searchTerm = '';
+        window.selectedCategory = 'All';
+
+        // Initial render
+        render();
+    </script>
+</body>
+</html>
