@@ -1,666 +1,1498 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name='impact-site-verification' value='cd79d5cc-bd58-4a2d-8434-9262c7f49a45'>
-    
-    <title>ToolScout - Discover 200+ Best SaaS Tools for Startups & Small Teams</title>
-    <meta name="description" content="Curated directory of 200+ quality SaaS tools for founders, freelancers, and small teams. Find productivity, dev tools, marketing software & more. Honest reviews, transparent pricing.">
-    <meta name="keywords" content="saas tools, productivity software, developer tools, marketing tools, startup tools, ai tools, free saas">
-    
-    <!-- Open Graph -->
-    <meta property="og:title" content="ToolScout - Discover the Best SaaS Tools for Startups">
-    <meta property="og:description" content="Curated directory of 200+ quality SaaS tools with honest reviews and transparent pricing">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://toolscout.co">
-    
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="ToolScout - Discover the Best SaaS Tools">
-    
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔍</text></svg>">
-    
+    <title>ToolScout - Discover the Best SaaS Tools</title>
+    <meta name="description" content="Curated directory of quality SaaS tools for founders, freelancers, and small teams.">
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-        
-        body { 
-            font-family: 'Inter', sans-serif;
-        }
-        
-        html {
-            scroll-behavior: smooth;
-        }
-        
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
         .line-clamp-2 {
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-        
-        .tool-card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .tool-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-        
-        button:focus, a:focus, input:focus, select:focus {
-            outline: 2px solid #4F46E5;
-            outline-offset: 2px;
-        }
-        
-        @keyframes shimmer {
-            0% { background-position: -1000px 0; }
-            100% { background-position: 1000px 0; }
-        }
-        
-        .skeleton {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 1000px 100%;
-            animation: shimmer 2s infinite;
-        }
-        
-        .stat-item {
-            animation: countUp 0.5s ease forwards;
-        }
-        
-        @keyframes countUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .hide-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        
-        .hide-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
+        .tool-card { transition: all 0.3s ease; }
+        .tool-card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-white">
     <div id="app"></div>
 
     <script type="module">
-        // ==================== TOOLS DATABASE ====================
-        const tools = [
-            // PRODUCTIVITY
-            {
-                name: "Notion",
-                tagline: "All-in-one workspace for notes, docs, and projects",
-                category: "Productivity",
-                pricing: "Free / €10/mo",
-                website: "https://notion.so",
-                description: "Notion is the Swiss Army knife of productivity apps. Combine notes, tasks, wikis, and databases in one flexible workspace. Perfect for organizing everything from personal tasks to team projects. The free tier is surprisingly generous - most solo founders never need to upgrade.",
-                logo: "🗒️",
-                featured: true,
-                iUseThis: true,
-                reviews: []
-            },
-            {
-                name: "Obsidian",
-                tagline: "Powerful knowledge base on local markdown files",
-                category: "Productivity",
-                pricing: "Free / €8/mo",
-                website: "https://obsidian.md",
-                description: "Think of Obsidian as your second brain. Unlike Notion, all your notes live locally as plain markdown files - you own your data forever. The graph view shows connections between ideas, perfect for building a personal knowledge system. Beloved by writers, researchers, and deep thinkers.",
-                logo: "💎",
-                featured: false,
-                iUseThis: true,
-                reviews: []
-            },
-            {
-                name: "Todoist",
-                tagline: "Simple yet powerful task management",
-                category: "Productivity",
-                pricing: "Free / €5/mo",
-                website: "https://todoist.com",
-                description: "The task manager that actually helps you get things done. Clean interface, natural language input ('tomorrow 3pm'), and works everywhere. Great for people who want GTD simplicity without complexity. The karma gamification actually motivates you to complete tasks.",
-                logo: "✓",
-                featured: false,
-                iUseThis: false,
-                reviews: []
-            },
-            {
-                name: "Airtable",
-                tagline: "Build powerful databases without code",
-                category: "Productivity",
-                pricing: "Free / €20/mo",
-                website: "https://airtable.com",
-                description: "Spreadsheets meet databases in the most beautiful way. Use it for CRM, content calendars, project management, inventory tracking - anything you can imagine. The interface is intuitive enough for non-technical users but powerful enough to replace custom software. Thousands of templates to get started fast.",
-                logo: "📊",
-                featured: false,
-                iUseThis: false,
-                reviews: []
-            },
-            {
-                name: "ClickUp",
-                tagline: "One app to replace them all",
-                category: "Productivity",
-                pricing: "Free / €7/mo",
-                website: "https://clickup.com",
-                description: "ClickUp wants to replace every productivity app you use. Tasks, docs, goals, time tracking, chat - it's all here. Can feel overwhelming at first, but once configured it's incredibly powerful. Free tier is generous enough for small teams. Best for people who love customization.",
-                logo: "⚡",
-                featured: false,
-                iUseThis: false,
-                reviews: []
-            },
-            {
-                name: "Monday.com",
-                tagline: "Work operating system for teams",
-                category: "Productivity",
-                pricing: "€8/mo",
-                website: "https://monday.com",
-                description: "Visual project management that makes work feel less like work. Color-coded boards, timeline views, and automation make tracking projects actually enjoyable. Popular with creative agencies and marketing teams. The mobile app is excellent for checking in on the go.",
-                logo: "📅",
-                featured: false,
-                iUseThis: false,
-                reviews: []
-            },
-            {
-                name: "Asana",
-                tagline: "Project management for teams",
-                category: "Productivity",
-                pricing: "Free / €11/mo",
-                website: "https://asana.com",
-                description: "The project management tool that scales with you. Start simple with lists, graduate to kanban boards, then use timeline view for complex projects. Integrates with everything. Free tier works great for teams up to 15 people. The search is phenomenal - never lose track of work.",
-                logo: "✔️",
-                featured: false,
-                iUseThis: false,
-                reviews: []
-            },
-            {
-                name: "Trello",
-                tagline: "Visual collaboration tool",
-                category: "Productivity",
-                pricing: "Free / €5/mo",
-                website: "https://trello.com",
-                description: "Kanban boards made simple and beautiful. Drag cards, add labels, set due dates - that's it. Perfect for visual thinkers who don't want complexity. Great for personal projects, editorial calendars, or small team workflows. Power-Ups add features when you need them.",
-                logo: "📌",
-                featured: false,
-                iUseThis: false,
-                reviews: []
-            },
-            {
-                name: "Dropbox",
-                tagline: "Cloud storage and file sharing",
-                category: "Productivity",
-                pricing: "Free / €10/mo",
-                website: "https://dropbox.com",
-                description: "Reliable cloud storage with excellent sync across devices. 2GB free, then paid plans for more space. Smart Sync saves local storage. The OG cloud storage that still does it best.",
-                logo: "📦",
-                featured: false,
-                iUseThis: false,
-                reviews: []
-            },
-            {
-                name: "Google Workspace",
-                tagline: "Business apps by Google",
-                category: "Productivity",
-                pricing: "€6/mo",
-                website: "https://workspace.google.com",
-                description: "Gmail, Drive, Docs, Sheets, and Meet with custom domain. Essential for professional email and collaboration. Real-time collaboration beats Microsoft Office. Generous storage and reliable uptime.",
-                logo: "🔷",
-                featured: false,
-                iUseThis: true,
-                reviews: []
-            },
+        // Tools Database
+const tools = [
+    // ==================== PRODUCTIVITY (25 TOOLS) ====================
+    {
+        name: "Notion",
+        tagline: "All-in-one workspace that replaces dozens of apps",
+        category: "Productivity",
+        pricing: "Free / €10/mo",
+        website: "https://notion.so",
+        description: "Notion is the Swiss Army knife of productivity apps. Combine notes, tasks, wikis, and databases in one flexible workspace. Build your own dashboards, track projects with kanban boards, or create a personal wiki. The free tier is surprisingly generous - most solo founders never need to upgrade. Real-time collaboration makes it perfect for remote teams.",
+        logo: "🗒️",
+        featured: true,
+        iUseThis: true,
+        reviews: []
+    },
+    {
+        name: "Obsidian",
+        tagline: "Your second brain - powerful knowledge base on local files",
+        category: "Productivity",
+        pricing: "Free / €8/mo",
+        website: "https://obsidian.md",
+        description: "Think of Obsidian as your second brain. Unlike cloud-based tools, all notes live locally as plain markdown files - you own your data forever. The bi-directional linking creates a web of knowledge that mirrors how your brain works. Graph view visualizes connections between ideas. Perfect for writers, researchers, and the Zettelkasten method. The plugin ecosystem is incredible.",
+        logo: "💎",
+        featured: true,
+        iUseThis: true,
+        reviews: []
+    },
+    {
+        name: "Todoist",
+        tagline: "The world's #1 task manager and to-do list app",
+        category: "Productivity",
+        pricing: "Free / €5/mo",
+        website: "https://todoist.com",
+        description: "The task manager that actually helps you get things done. Natural language input means you can type 'tomorrow 3pm' and it automatically sets the due date. Karma gamification motivates you to complete tasks and maintain streaks. Works everywhere - web, mobile, desktop, even smart watches. The free tier handles most personal use cases perfectly.",
+        logo: "✓",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Airtable",
+        tagline: "Build powerful databases without code - spreadsheets on steroids",
+        category: "Productivity",
+        pricing: "Free / €20/mo",
+        website: "https://airtable.com",
+        description: "Airtable is what happens when spreadsheets meet databases. Use it for CRM, content calendars, project management, inventory tracking - anything you can imagine. Create custom views (grid, calendar, kanban, gallery), link records across tables, and automate workflows. The interface is beautiful and intuitive. Thousands of templates get you started in minutes.",
+        logo: "📊",
+        featured: true,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "ClickUp",
+        tagline: "One app to replace them all - save time and boost productivity",
+        category: "Productivity",
+        pricing: "Free / €7/mo",
+        website: "https://clickup.com",
+        description: "ClickUp wants to replace every productivity app you use. Tasks, docs, goals, time tracking, chat, whiteboards - it's all here. Multiple views (list, board, calendar, gantt, timeline) let you visualize work your way. The customization options are nearly infinite. Can feel overwhelming at first, but teams who invest see massive productivity gains.",
+        logo: "⚡",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Monday.com",
+        tagline: "Work operating system that powers teams worldwide",
+        category: "Productivity",
+        pricing: "€8/mo",
+        website: "https://monday.com",
+        description: "Visual project management that makes work feel less like work. Color-coded status columns, timeline views, and 200+ templates for every use case. Automation handles repetitive tasks - notify team members, move items between boards, create recurring tasks. Dashboard widgets give leadership visibility. Popular with marketing teams and creative agencies.",
+        logo: "📅",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Asana",
+        tagline: "Manage projects and tasks in one flexible tool",
+        category: "Productivity",
+        pricing: "Free / €11/mo",
+        website: "https://asana.com",
+        description: "The project management tool that scales from solo founder to enterprise. Start simple with lists, graduate to kanban boards, then use timeline (Gantt) view for complex projects. Forms collect requests from stakeholders. Goals and portfolios give leadership visibility. The search is phenomenal - find anything instantly. Free tier works great for teams up to 15 people.",
+        logo: "✔️",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Trello",
+        tagline: "Visual collaboration tool - organize anything with anyone",
+        category: "Productivity",
+        pricing: "Free / €5/mo",
+        website: "https://trello.com",
+        description: "Kanban boards made simple and beautiful. Drag cards, add labels, set due dates - that's it. Perfect for visual thinkers who don't want complexity. Great for personal projects, editorial calendars, or small team workflows. Power-Ups add features when you need them (calendar view, voting, integrations). Butler automation handles repetitive tasks.",
+        logo: "📌",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Coda",
+        tagline: "Docs that act like apps - all-in-one collaborative workspace",
+        category: "Productivity",
+        pricing: "Free / €12/mo",
+        website: "https://coda.io",
+        description: "Documents that act like apps. Start with a doc, add tables, buttons, and automation - suddenly you've built a custom tool. Build a CRM, product roadmap, or OKR tracker without code. The pack system connects external services - pull GitHub issues, Slack messages, or Google Calendar events directly into your docs. Powerful but has a learning curve.",
+        logo: "📄",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Sunsama",
+        tagline: "Daily planner for busy professionals seeking work-life balance",
+        category: "Productivity",
+        pricing: "€16/mo",
+        website: "https://sunsama.com",
+        description: "The daily planning tool that actually helps you finish work on time. Each morning, drag tasks from Asana, Trello, Jira, and email into today's plan and assign time estimates. The timer keeps you focused. At day's end, reflect on what got done. This ritual builds self-awareness about your capacity. Not cheap, but users swear it's life-changing for work-life balance.",
+        logo: "☀️",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Evernote",
+        tagline: "Note-taking app that helps you organize your life",
+        category: "Productivity",
+        pricing: "Free / €8/mo",
+        website: "https://evernote.com",
+        description: "The OG note-taking app that's been around since 2008. Capture ideas, create notebooks, scan documents with your phone, and clip web pages. Search even finds text in images and PDFs. While newer tools like Notion have more features, Evernote's simplicity and reliability keep millions of users loyal. Free tier limited to 2 devices.",
+        logo: "🐘",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Dropbox",
+        tagline: "Secure cloud storage and file sharing for teams",
+        category: "Productivity",
+        pricing: "Free / €10/mo",
+        website: "https://dropbox.com",
+        description: "The OG cloud storage that still does it best. Rock-solid sync across devices, version history, and file recovery. Smart Sync saves local storage by keeping files in the cloud until you need them. Paper docs are underrated for collaboration. 2GB free gets you started, but most people upgrade for peace of mind. Trusted by 700M+ users.",
+        logo: "📦",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Google Workspace",
+        tagline: "Business apps by Google - email, docs, and collaboration",
+        category: "Productivity",
+        pricing: "€6/mo",
+        website: "https://workspace.google.com",
+        description: "Professional email with your domain plus Docs, Sheets, Drive, and Meet. Essential for any business wanting to look professional. Real-time collaboration beats Microsoft Office. Generous storage and reliable uptime. Worth it just for the custom email address. Integrates with everything. Admin controls for team management.",
+        logo: "🔷",
+        featured: false,
+        iUseThis: true,
+        reviews: []
+    },
+    {
+        name: "Microsoft 365",
+        tagline: "Productivity apps and cloud services from Microsoft",
+        category: "Productivity",
+        pricing: "€6/mo",
+        website: "https://microsoft.com/microsoft-365",
+        description: "Word, Excel, PowerPoint, Outlook, OneDrive, and Teams in one subscription. Desktop apps plus cloud access. Better for teams already in the Microsoft ecosystem or industries that require Office compatibility. 1TB OneDrive storage per user. Teams is surprisingly good for video calls and collaboration.",
+        logo: "Ⓜ️",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Notion Calendar",
+        tagline: "Beautiful calendar integrated with Notion workspace",
+        category: "Productivity",
+        pricing: "Free",
+        website: "https://notion.so/product/calendar",
+        description: "Google Calendar, but prettier and connected to your Notion workspace. See tasks and meetings in one view. Time blocking becomes visual and satisfying. Syncs with Google Calendar, so you're not locked in. Perfect companion if you're already in the Notion ecosystem. Acquired by Notion and now completely free.",
+        logo: "📆",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Fantastical",
+        tagline: "The calendar app you won't be able to live without",
+        category: "Productivity",
+        pricing: "Free / €5/mo",
+        website: "https://flexibits.com/fantastical",
+        description: "The most beautiful calendar app for Mac and iOS. Natural language input - type 'lunch with Sarah tomorrow at 1pm' and it creates the event. Menu bar widget shows your schedule at a glance. Calendar sets organize work/personal views. Weather integration. Conference call detection automatically adds Zoom links. Mac users swear by it.",
+        logo: "📅",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Roam Research",
+        tagline: "Note-taking tool for networked thought",
+        category: "Productivity",
+        pricing: "€15/mo",
+        website: "https://roamresearch.com",
+        description: "The tool that started the 'tools for thought' movement. Bi-directional linking and daily notes create a web of connected knowledge. Popular with researchers, writers, and PKM enthusiasts. The outliner structure is unique. Has a cult following but steep learning curve. Expensive compared to alternatives like Obsidian, but the workflow is different.",
+        logo: "🧠",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Bear",
+        tagline: "Beautiful, flexible writing app for Mac and iOS",
+        category: "Productivity",
+        pricing: "Free / €2/mo",
+        website: "https://bear.app",
+        description: "The most beautiful markdown editor for Apple users. Clean interface, hashtag organization, and seamless sync via iCloud. Perfect for writers who want simplicity without sacrificing power. Themes make writing pleasant. Export to PDF, Word, or HTML. Free version works great, Pro adds sync and themes. Mac/iOS only.",
+        logo: "🐻",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Things 3",
+        tagline: "Award-winning personal task manager for Mac and iOS",
+        category: "Productivity",
+        pricing: "€50 one-time",
+        website: "https://culturedcode.com/things",
+        description: "The most beautiful task manager money can buy. One-time purchase (no subscription!). Perfect implementation of GTD methodology. Today view shows what matters. Projects and areas organize life. Quick entry from anywhere. Repeating tasks and reminders. Mac/iOS only, no web version. Worth every penny for Apple users who want elegant simplicity.",
+        logo: "☑️",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Craft",
+        tagline: "Beautiful documents for Mac, iPhone, and iPad",
+        category: "Productivity",
+        pricing: "Free / €5/mo",
+        website: "https://craft.do",
+        description: "Notion meets Apple design language. Beautiful native apps for Mac, iPhone, and iPad. Create docs, notes, and wikis with a delightful interface. Daily notes, backlinks, and templates included. Sharing creates beautiful web pages. Free tier is generous. Perfect for Apple users who find Notion too cluttered. Export to PDF, Word, or Markdown.",
+        logo: "📝",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Workflowy",
+        tagline: "Organize your brain with nested lists",
+        category: "Productivity",
+        pricing: "Free / €5/mo",
+        website: "https://workflowy.com",
+        description: "The original infinite outliner. Everything is a list that can be nested infinitely. Simple but powerful. Zoom into any bullet to make it the root. Mirror bullets to show them in multiple places. Great for brainstorming, planning, and organizing thoughts. Free tier includes 250 bullets/month. Die-hard fans swear nothing else comes close for thinking.",
+        logo: "📋",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Superhuman",
+        tagline: "The fastest email experience ever made",
+        category: "Productivity",
+        pricing: "€30/mo",
+        website: "https://superhuman.com",
+        description: "Email for people who get 100+ emails per day. Keyboard shortcuts for everything - never touch your mouse. Split inbox shows important vs other. Read statuses show when people open your emails. Remind me if no reply. Snippets save common responses. Crazy expensive but users claim it saves 3+ hours per week. Invite-only onboarding.",
+        logo: "⚡",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Forest",
+        tagline: "Stay focused, be present, build healthy phone habits",
+        category: "Productivity",
+        pricing: "€4 one-time",
+        website: "https://forestapp.cc",
+        description: "Gamified focus timer that plants real trees. Start a focus session and a virtual tree grows. Leave the app and your tree dies. Stay focused and earn coins to plant real trees via Trees for the Future. Simple but effective. Great for people who struggle with phone addiction. Stats show your productive hours. One-time purchase, no subscription.",
+        logo: "🌳",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Centered",
+        tagline: "Flow state coaching for deep work",
+        category: "Productivity",
+        pricing: "€10/mo",
+        website: "https://centered.app",
+        description: "AI coach that helps you get into flow state. Start a focus session and Centered blocks distractions, plays flow music, and coaches you through tasks. Virtual coach checks in and keeps you accountable. Analytics show your most productive times. Built by neuroscience PhDs. Unique approach to productivity - either you love it or hate it.",
+        logo: "🎯",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Spark",
+        tagline: "Email app that helps you take control of your inbox",
+        category: "Productivity",
+        pricing: "Free / €8/mo",
+        website: "https://sparkmailapp.com",
+        description: "The email app that actually makes email pleasant. Smart inbox automatically sorts important emails. Snooze emails until later. Schedule send. Write emails with your team. Natural language search finds anything. Beautiful across Mac, iPhone, iPad, and Android. Free tier works great for personal use. Premium adds team features.",
+        logo: "✉️",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
 
-            // DEVELOPER TOOLS
-            {
-                name: "Vercel",
-                tagline: "Deploy web apps instantly",
-                category: "Developer Tools",
-                pricing: "Free / €20/mo",
-                website: "https://vercel.com",
-                description: "Deploy Next.js, React, and static sites with zero configuration. The free tier handles most projects without breaking a sweat. Edge functions, instant rollbacks, and preview deployments for every PR. DX is unmatched.",
-                logo: "▲",
-                featured: true,
-                iUseThis: true,
-                reviews: []
-            },
-            {
-                name: "GitHub",
-                tagline: "Platform for software development",
-                category: "Developer Tools",
-                pricing: "Free / €4/mo",
-                website: "https://github.com",
-                description: "Version control, code hosting, and collaboration for developers. Free for public repositories, paid for private. GitHub Actions automates your workflow. Essential for any development project.",
-                logo: "💻",
-                featured: false,
-                iUseThis: true,
-                reviews: []
-            },
-            {
-                name: "Linear",
-                tagline: "Issue tracking for modern software teams",
-                category: "Developer Tools",
-                pricing: "Free / €8/mo",
-                website: "https://linear.app",
-                description: "Beautiful project management tool built for software teams. Lightning-fast interface with GitHub integration. Jira, but if it was built today.",
-                logo: "📐",
-                featured: false,
-                iUseThis: true,
-                reviews: []
-            },
-            {
-                name: "Netlify",
-                tagline: "Deploy web projects instantly",
-                category: "Developer Tools",
-                pricing: "Free / €19/mo",
-                website: "https://netlify.com",
-                description: "Similar to Vercel but with different features. Great free tier for static sites and serverless functions. Forms and identity management included.",
-                logo: "◇",
-                featured: false,
-                iUseThis: false,
-                reviews: []
-            },
-            {
-                name: "Render",
-                tagline: "Cloud platform for web apps",
-                category: "Developer Tools",
-                pricing: "Free / €7/mo",
-                website: "https://render.com",
-                description: "Deploy web services, static sites, and databases. Simpler than AWS, more features than Vercel. Heroku's spiritual successor.",
-                logo: "🚀",
-                featured: false,
-                iUseThis: false,
-                reviews: []
-            },
-            {
-                name: "Supabase",
-                tagline: "Open source Firebase alternative",
-                category: "Developer Tools",
-                pricing: "Free / €25/mo",
-                website: "https://supabase.com",
-                description: "PostgreSQL database with auth, realtime subscriptions, and storage built-in. Firebase without vendor lock-in. Auto-generated REST APIs and row-level security.",
-                logo: "⚡",
-                featured: true,
-                iUseThis: false,
-                reviews: []
-            },
-            {
-                name: "Postman",
-                tagline: "API development platform",
-                category: "Developer Tools",
-                pricing: "Free / €14/mo",
-                website: "https://postman.com",
-                description: "Test, document, and collaborate on APIs. Essential tool for backend developers. Save requests, create collections, and generate documentation.",
-                logo: "📮",
-                featured: false,
-                iUseThis: true,
-                reviews: []
-            },
-            {
-                name: "Cloudflare",
-                tagline: "CDN and security services",
-                category: "Developer Tools",
-                pricing: "Free / €20/mo",
-                website: "https://cloudflare.com",
-                description: "Free CDN that makes your site faster and more secure. DDoS protection, SSL certificates, and analytics included. Every website should use Cloudflare.",
-                logo: "☁️",
-                featured: false,
-                iUseThis: true,
-                reviews: []
-            },
+    // ==================== DEVELOPER TOOLS (30 TOOLS) ====================
+    {
+        name: "Vercel",
+        tagline: "Deploy web apps instantly with zero configuration",
+        category: "Developer Tools",
+        pricing: "Free / €20/mo",
+        website: "https://vercel.com",
+        description: "Git push and you're deployed. Zero config for Next.js, but works with any framework. Edge functions run code globally with sub-50ms latency. Preview deployments for every PR let you test changes before merging. Instant rollbacks. Analytics show Core Web Vitals. The DX is unmatched. The free tier is shockingly generous - most side projects never need to pay.",
+        logo: "▲",
+        featured: true,
+        iUseThis: true,
+        reviews: []
+    },
+    {
+        name: "GitHub",
+        tagline: "Where the world builds software - 100M+ developers",
+        category: "Developer Tools",
+        pricing: "Free / €4/mo",
+        website: "https://github.com",
+        description: "The social network for developers. Host unlimited public and private repositories. Review code with pull requests. Automate workflows with Actions. Manage projects with Issues and Projects. Dependabot alerts you to security vulnerabilities. Codespaces provides cloud development environments. GitHub Copilot uses AI to suggest code. Essential infrastructure for open source.",
+        logo: "💻",
+        featured: true,
+        iUseThis: true,
+        reviews: []
+    },
+    {
+        name: "Linear",
+        tagline: "Issue tracking tool you'll actually enjoy using",
+        category: "Developer Tools",
+        pricing: "Free / €8/mo",
+        website: "https://linear.app",
+        description: "Jira, but if it was built today. Every interaction is optimized for speed - keyboard shortcuts for everything, instant search, no loading spinners. GitHub integration creates branches and auto-closes issues from commits. Roadmap view shows what's coming. Triage helps manage incoming issues. The desktop app is faster than any web tool. Teams switch from Jira and never look back.",
+        logo: "📐",
+        featured: true,
+        iUseThis: true,
+        reviews: []
+    },
+    {
+        name: "Supabase",
+        tagline: "Open source Firebase alternative built on Postgres",
+        category: "Developer Tools",
+        pricing: "Free / €25/mo",
+        website: "https://supabase.com",
+        description: "Get a full Postgres database with beautiful GUI, automatic REST and GraphQL APIs, real-time subscriptions, authentication (email, OAuth, magic links), file storage, and edge functions. Row Level Security policies protect data at the database level. The studio dashboard lets you browse data, run SQL, and manage users visually. Self-hostable if you want.",
+        logo: "⚡",
+        featured: true,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Railway",
+        tagline: "Bring your code, we'll handle the rest",
+        category: "Developer Tools",
+        pricing: "€5 credit/mo free",
+        website: "https://railway.app",
+        description: "Deploy from GitHub in one click. Databases, cron jobs, and services that scale automatically. Beautiful dashboard, instant logs, and zero DevOps knowledge required. Pricing is usage-based starting at $5/month - you only pay for what you use. Perfect for full-stack apps, Discord bots, and background workers. Many indie hackers switched from Heroku to Railway.",
+        logo: "🚂",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Postman",
+        tagline: "API development platform used by 20M developers",
+        category: "Developer Tools",
+        pricing: "Free / €14/mo",
+        website: "https://postman.com",
+        description: "Test APIs without writing code. Send HTTP requests, inspect responses, write tests, and automate workflows. Collections organize related requests. Mock servers let you develop against APIs that don't exist yet. Documentation generates automatically from collections. Monitors run tests on schedules. Newman CLI runs tests in CI/CD. Essential tool for backend developers.",
+        logo: "📮",
+        featured: false,
+        iUseThis: true,
+        reviews: []
+    },
+    {
+        name: "Cloudflare",
+        tagline: "CDN and security that makes sites faster and safer",
+        category: "Developer Tools",
+        pricing: "Free / €20/mo",
+        website: "https://cloudflare.com",
+        description: "Free CDN that makes your site faster and more secure. DDoS protection, SSL certificates, and analytics included at no cost. Workers let you run code at the edge for sub-10ms response times. Pages deploys static sites. R2 storage is S3-compatible but cheaper. The DNS is the fastest in the world. Every website should use Cloudflare.",
+        logo: "☁️",
+        featured: false,
+        iUseThis: true,
+        reviews: []
+    },
+    {
+        name: "Netlify",
+        tagline: "Build, deploy, and scale modern web projects",
+        category: "Developer Tools",
+        pricing: "Free / €19/mo",
+        website: "https://netlify.com",
+        description: "Pioneered the JAMstack movement. Connect your Git repo and every push deploys automatically. Preview deployments for branches and pull requests. Serverless functions run backend code without servers. Forms collect submissions without a backend. Identity handles authentication. Split testing (A/B testing) is built-in. Great for React, Vue, Hugo, and static sites.",
+        logo: "◇",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Render",
+        tagline: "Cloud platform that deploys in seconds",
+        category: "Developer Tools",
+        pricing: "Free / €7/mo",
+        website: "https://render.com",
+        description: "Heroku's spiritual successor. Deploy web services, static sites, cron jobs, background workers, and managed PostgreSQL/Redis. Free tier includes databases and web services that spin down after inactivity. Infrastructure as Code with render.yaml. Preview environments for pull requests. Zero-downtime deploys. Many teams migrated from Heroku to Render.",
+        logo: "🚀",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "PlanetScale",
+        tagline: "MySQL-compatible serverless database platform",
+        category: "Developer Tools",
+        pricing: "Free / €29/mo",
+        website: "https://planetscale.com",
+        description: "MySQL database that branches like Git. Create branches for development, test schema changes safely, and merge back to production. Deploy requests make database changes reviewable like code. No more migration headaches or downtime. Built on Vitess (powers YouTube and Slack). Free tier includes 5GB storage and 1 billion row reads/month.",
+        logo: "🪐",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Fly.io",
+        tagline: "Deploy app servers close to your users",
+        category: "Developer Tools",
+        pricing: "Free / €2/mo",
+        website: "https://fly.io",
+        description: "Run full-stack apps and databases close to your users. Deploy Docker containers globally. Automatic scaling and load balancing. Free tier includes 3 shared VMs and 3GB storage. Great for apps that need low latency worldwide. CLI is excellent. Postgres databases with automatic failover. Used by many developers leaving Heroku.",
+        logo: "🪰",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Sentry",
+        tagline: "Application monitoring and error tracking",
+        category: "Developer Tools",
+        pricing: "Free / €26/mo",
+        website: "https://sentry.io",
+        description: "Know about errors before your users complain. Real-time error tracking with stack traces, breadcrumbs, and user context. Performance monitoring catches slow queries and N+1 problems. Source map support makes debugging minified code easy. Alerts via Slack, email, or PagerDuty. Free tier includes 5K errors/month. Essential for production apps.",
+        logo: "🐛",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Algolia",
+        tagline: "Search and discovery API for web and mobile",
+        category: "Developer Tools",
+        pricing: "Free / €1/mo per unit",
+        website: "https://algolia.com",
+        description: "Add lightning-fast search to your app in hours, not weeks. Typo-tolerance, instant results as you type, and faceted search out of the box. Used by Stripe, Twitch, and Medium. Free tier includes 10K searches/month and 10K records. Much better than rolling your own search. The InstantSearch UI libraries make implementation easy.",
+        logo: "🔍",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Heroku",
+        tagline: "Cloud platform for deploying apps",
+        category: "Developer Tools",
+        pricing: "€7/mo",
+        website: "https://heroku.com",
+        description: "The OG platform-as-a-service. Git push to deploy, add-ons for databases and services, zero config scaling. No more free tier (killed in 2022), but Eco dynos are cheap at $7/mo. Great for Ruby, Python, Node, and PHP apps. Still the easiest way to deploy for many developers, though newer alternatives exist.",
+        logo: "💜",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "DigitalOcean",
+        tagline: "Cloud infrastructure built for developers",
+        category: "Developer Tools",
+        pricing: "€4/mo",
+        website: "https://digitalocean.com",
+        description: "Simple cloud hosting with transparent pricing. Droplets (VMs), managed databases, and Kubernetes that doesn't require a PhD. Great docs and community tutorials. Cheaper than AWS for straightforward workloads. App Platform handles deployment for you if you don't want to manage servers. Spaces (S3-compatible storage) included.",
+        logo: "🌊",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "GitLab",
+        tagline: "DevOps platform with built-in CI/CD",
+        category: "Developer Tools",
+        pricing: "Free / €19/mo",
+        website: "https://gitlab.com",
+        description: "The all-in-one DevOps platform. Git hosting, CI/CD, container registry, issue tracking, and wiki in one tool. Self-hostable if you want. CI/CD is more powerful than GitHub Actions. Free tier includes 400 CI/CD minutes/month. Great for teams wanting everything in one place. Security scanning built-in.",
+        logo: "🦊",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Docker",
+        tagline: "Containerize your applications",
+        category: "Developer Tools",
+        pricing: "Free / €5/mo",
+        website: "https://docker.com",
+        description: "Package applications in containers for consistent deployment everywhere. Docker Desktop makes local development match production. Docker Hub hosts container images. Compose defines multi-container apps. Industry standard for DevOps. Free for individuals, paid for organizations. Essential skill for modern developers.",
+        logo: "🐳",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Insomnia",
+        tagline: "API client and design tool",
+        category: "Developer Tools",
+        pricing: "Free / €5/mo",
+        website: "https://insomnia.rest",
+        description: "Alternative to Postman for API testing. Clean interface with GraphQL support. Design APIs with OpenAPI spec. Environment variables manage dev/staging/prod. Request chaining passes data between requests. Git sync backs up collections. Free for individuals, paid for teams. Many developers prefer it over Postman for the cleaner UX.",
+        logo: "🌙",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Replit",
+        tagline: "Build software faster with online coding",
+        category: "Developer Tools",
+        pricing: "Free / €7/mo",
+        website: "https://replit.com",
+        description: "Code, collaborate, and deploy from your browser. Supports 50+ programming languages. Instant dev environments - no setup required. Multiplayer coding lets teams pair program. Deployments host your apps. Great for learning, prototyping, and teaching. Free tier works for most use cases. AI-powered code completion included.",
+        logo: "⚡",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "CodePen",
+        tagline: "Social development environment for front-end",
+        category: "Developer Tools",
+        pricing: "Free / €9/mo",
+        website: "https://codepen.io",
+        description: "Build and test HTML, CSS, and JavaScript in the browser. Great for prototyping and sharing demos. Instant preview as you type. Preprocessors (Sass, Pug, TypeScript) supported. Embed pens in blog posts. Discover trending code from other developers. Free tier works great. Pro adds privacy, collaboration, and asset hosting.",
+        logo: "✏️",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Twilio",
+        tagline: "Communication APIs for SMS, voice, and video",
+        category: "Developer Tools",
+        pricing: "Pay as you go",
+        website: "https://twilio.com",
+        description: "Send SMS, make voice calls, and add video chat via API. Pay per use with no monthly fees. Used by Uber, Airbnb, and Netflix. Verify phone numbers with 2FA. SendGrid (owned by Twilio) handles email. Extensive documentation and SDKs for every language. Free trial credits to get started.",
+        logo: "📱",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "SendGrid",
+        tagline: "Email delivery service for transactional emails",
+        category: "Developer Tools",
+        pricing: "Free / €15/mo",
+        website: "https://sendgrid.com",
+        description: "Transactional email API for sending automated emails (password resets, receipts, notifications). Excellent deliverability. Free tier includes 100 emails/day forever. Analytics show opens and clicks. Owned by Twilio. Better than sending from your own SMTP server. Templates and dynamic content supported.",
+        logo: "📨",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Auth0",
+        tagline: "Authentication and authorization platform",
+        category: "Developer Tools",
+        pricing: "Free / €35/mo",
+        website: "https://auth0.com",
+        description: "Add secure login to your app in minutes. Supports social logins (Google, Facebook, GitHub), multi-factor authentication, and passwordless login. Free tier includes 7,500 active users. Universal Login provides a hosted login page. Rules and hooks customize auth flows. Better than building your own auth system.",
+        logo: "🔐",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "LogRocket",
+        tagline: "Session replay and performance monitoring",
+        category: "Developer Tools",
+        pricing: "Free / €99/mo",
+        website: "https://logrocket.com",
+        description: "Record user sessions to see exactly what went wrong. Like having a DVR for your website. See console logs, network requests, and DOM changes. Performance monitoring catches slow interactions. Free tier includes 1,000 sessions/month. Essential for debugging production issues. Integrates with Sentry, Jira, and Slack.",
+        logo: "📹",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Clerk",
+        tagline: "Complete user management for modern apps",
+        category: "Developer Tools",
+        pricing: "Free / €25/mo",
+        website: "https://clerk.com",
+        description: "Beautiful authentication and user management. Pre-built components for sign-up, sign-in, and user profiles. Social logins, magic links, and multi-factor auth included. User management dashboard. Webhooks for custom logic. Free tier includes 10K MAU. Better UX than Auth0 for many use cases. Growing fast in the indie hacker community.",
+        logo: "🔑",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Prisma",
+        tagline: "Next-generation ORM for Node.js and TypeScript",
+        category: "Developer Tools",
+        pricing: "Free / Open Source",
+        website: "https://prisma.io",
+        description: "The best ORM for TypeScript. Type-safe database access with auto-completion. Schema definition is clean and readable. Migrations handle database changes. Prisma Studio provides a GUI for your database. Works with PostgreSQL, MySQL, SQLite, SQL Server, and MongoDB. Free and open source. Essential for modern Node.js apps.",
+        logo: "◇",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Stripe",
+        tagline: "Payment infrastructure for the internet",
+        category: "Developer Tools",
+        pricing: "2.9% + €0.30",
+        website: "https://stripe.com",
+        description: "Accept payments online with flexible APIs. Industry standard for subscription billing and one-time payments. Checkout creates beautiful payment pages. Billing handles subscriptions and invoicing. Connect enables marketplace payments. Radar fights fraud. Excellent documentation. Used by Amazon, Google, and Shopify. Pay-per-transaction, no monthly fees.",
+        logo: "💳",
+        featured: true,
+        iUseThis: true,
+        reviews: []
+    },
+    {
+        name: "Resend",
+        tagline: "Email API for developers",
+        category: "Developer Tools",
+        pricing: "Free / €20/mo",
+        website: "https://resend.com",
+        description: "Modern email API built by the creator of Vercel's email service. Beautiful React Email templates. Simple API that just works. Free tier includes 100 emails/day. Great deliverability. Modern alternative to SendGrid. Gaining popularity in the indie hacker community for its simplicity.",
+        logo: "📧",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Neon",
+        tagline: "Serverless Postgres built for the cloud",
+        category: "Developer Tools",
+        pricing: "Free / €19/mo",
+        website: "https://neon.tech",
+        description: "Serverless Postgres that scales to zero. Branch your database like Git. Instant cold starts. Free tier includes 3GB storage. Built for modern serverless apps. Great integration with Vercel and Netlify. Automatic backups and point-in-time recovery. Cheaper than RDS for most workloads.",
+        logo: "🟢",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Upstash",
+        tagline: "Serverless Redis and Kafka",
+        category: "Developer Tools",
+        pricing: "Free / €10/mo",
+        website: "https://upstash.com",
+        description: "Serverless Redis with per-request pricing. Scales to zero when not in use. REST API means no connection pooling headaches. Great for edge functions and serverless apps. Free tier includes 10K requests/day. Kafka service for event streaming. Built for the serverless era.",
+        logo: "🚀",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
 
-            // MARKETING
-            {
-                name: "ConvertKit",
-                tagline: "Email marketing for creators",
-                category: "Marketing",
-                pricing: "Free / €25/mo",
-                website: "https://convertkit.com",
-                description: "Email marketing focused on creators and bloggers. Simple automation, landing pages, and subscriber tagging included. Free up to 1000 subscribers.",
-                logo: "📧",
-                featured: true,
-                iUseThis: false,
-                reviews: []
-            },
-            {
-                name: "Beehiiv",
-                tagline: "Newsletter platform built for growth",
-                category: "Marketing",
-                pricing: "Free / €49/mo",
-                website: "https://beehiiv.com",
-                description: "Modern newsletter platform with referral programs, monetization, and analytics. Built-in growth tools and ad network. Used by top newsletters.",
-                logo: "🐝",
-                featured: false,
-                iUseThis: false,
-                reviews: []
-            },
-            {
-                name: "Mailchimp",
-                tagline: "Email marketing and automation",
-                category: "Marketing",
-                pricing: "Free / €13/mo",
-                website: "https://mailchimp.com",
-                description: "Classic email marketing platform with templates, automation, and analytics. Free tier includes up to 500 contacts. Great for e-commerce.",
-                logo: "📬",
-                featured: false,
-                iUseThis: false,
-                reviews: []
-            },
-            {
-                name: "Buffer",
-                tagline: "Social media scheduling",
-                category: "Marketing",
-                pricing: "Free / €6/mo",
-                website: "https://buffer.com",
-                description: "Schedule social posts across Twitter, LinkedIn, Instagram, and Facebook. Clean interface, analytics, and browser extension included.",
-                logo: "📱",
-                featured: false,
-                iUseThis: false,
-                reviews: []
-            },
-            {
-                name: "Zapier",
-                tagline: "Connect your apps and automate workflows",
-                category: "Automation",
-                pricing: "Free / €20/mo",
-                website: "https://zapier.com",
-                description: "Automate tasks between 5,000+ apps without code. Free tier includes 100 tasks per month. Essential automation tool.",
-                logo: "⚡",
-                featured: true,
-                iUseThis: true,
-                reviews: []
-            },
-            {
-                name: "Typeform",
-                tagline: "Beautiful forms and surveys",
-                category: "Marketing",
-                pricing: "Free / €25/mo",
-                website: "https://typeform.com",
-                description: "Create engaging forms, surveys, and quizzes that actually get completed. Much better UX than Google Forms.",
-                logo: "📋",
-                featured: false,
-                iUseThis: false,
-                reviews: []
-            },
-            {
-                name: "Calendly",
-                tagline: "Scheduling automation for everyone",
-                category: "Communication",
-                pricing: "Free / €8/mo",
-                website: "https://calendly.com",
-                description: "Let people book time with you without the email back-and-forth. Syncs with your calendar automatically.",
-                logo: "📅",
-                featured: false,
-                iUseThis: false,
-                reviews: []
-            },
-            {
-                name: "Loom",
-                tagline: "Async video messaging for work",
-                category: "Communication",
-                pricing: "Free / €8/mo",
-                website: "https://loom.com",
-                description: "Record quick video messages to replace meetings. Screen + camera recording with instant sharing links.",
-                logo: "📹",
-                featured: false,
-                iUseThis: true,
-                reviews: []
-            },
+    // ==================== MARKETING (25 TOOLS) ====================
+    {
+        name: "ConvertKit",
+        tagline: "Email marketing platform built for creators",
+        category: "Marketing",
+        pricing: "Free / €25/mo",
+        website: "https://convertkit.com",
+        description: "Email marketing built specifically for bloggers, YouTubers, and course creators. Tag-based subscriber management beats traditional lists. Visual automation builder creates sophisticated sequences without code. Landing pages and forms capture subscribers. Commerce features sell digital products directly. Free tier includes full features for up to 1,000 subscribers.",
+        logo: "📧",
+        featured: true,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Beehiiv",
+        tagline: "Newsletter platform built for growth and monetization",
+        category: "Marketing",
+        pricing: "Free / €49/mo",
+        website: "https://beehiiv.com",
+        description: "The modern newsletter platform eating Substack's lunch. Built-in referral program incentivizes subscribers to share. Ad network connects you with sponsors. Paid subscriptions and boosts monetize content. Analytics show open rates, click rates, and growth. Free tier includes unlimited subscribers. Used by top newsletters like Milk Road. Growing fast.",
+        logo: "🐝",
+        featured: true,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Mailchimp",
+        tagline: "Marketing automation and email platform",
+        category: "Marketing",
+        pricing: "Free / €13/mo",
+        website: "https://mailchimp.com",
+        description: "The most well-known email tool for good reason. Beautiful templates, A/B testing, and deep analytics. Free tier supports 500 contacts and 1,000 emails/month. E-commerce integrations are excellent (Shopify, WooCommerce). Can feel bloated for simple newsletters, but powerful for businesses. Excellent deliverability. Used by millions.",
+        logo: "📬",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Buffer",
+        tagline: "Social media scheduling made simple",
+        category: "Marketing",
+        pricing: "Free / €6/mo",
+        website: "https://buffer.com",
+        description: "Schedule social posts across Twitter, LinkedIn, Instagram, and Facebook from one place. Clean interface that doesn't overwhelm. Analytics show what content resonates. Free plan covers 3 channels and 10 scheduled posts. Browser extension makes sharing easy. Great for solopreneurs and small teams. Transparent pricing and ethics.",
+        logo: "📱",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Hootsuite",
+        tagline: "Social media management at scale",
+        category: "Marketing",
+        pricing: "€49/mo",
+        website: "https://hootsuite.com",
+        description: "Enterprise-grade social media management. Monitor mentions, schedule posts, and collaborate with teams. Powerful analytics and reporting. Can manage dozens of accounts. Overkill for solo founders, but essential for agencies and larger marketing teams. Bulk scheduling saves time. Social listening tracks brand mentions.",
+        logo: "🦉",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Later",
+        tagline: "Visual social media planner for Instagram",
+        category: "Marketing",
+        pricing: "Free / €18/mo",
+        website: "https://later.com",
+        description: "Instagram-first social planner with visual calendar. Drag and drop photos to schedule. Linkin.bio feature turns your Instagram into a clickable landing page. Best-time-to-post suggestions. Free plan includes 10 posts per platform per month. Perfect for visual brands and influencers. Also supports TikTok, Facebook, Twitter, and Pinterest.",
+        logo: "📸",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Typeform",
+        tagline: "Beautiful forms and surveys that people enjoy",
+        category: "Marketing",
+        pricing: "Free / €25/mo",
+        website: "https://typeform.com",
+        description: "Forms that don't feel like forms. One question at a time, beautiful design, and conversational flow. Completion rates crush Google Forms. Logic jumps create personalized experiences based on answers. Great for surveys, quizzes, lead generation, and customer feedback. Free tier limited to 10 questions and 100 responses/month.",
+        logo: "📋",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Calendly",
+        tagline: "Scheduling automation that saves time",
+        category: "Marketing",
+        pricing: "Free / €8/mo",
+        website: "https://calendly.com",
+        description: "Stop the email tennis of scheduling meetings. Share your link, they pick a time, it's on both calendars automatically. Integrates with Zoom, Google Meet, and Microsoft Teams. Buffer times prevent back-to-back meetings. Round-robin distribution for teams. Free tier works great for most people. Essential for sales teams and consultants.",
+        logo: "📅",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Loom",
+        tagline: "Async video messaging for work",
+        category: "Marketing",
+        pricing: "Free / €12/mo",
+        website: "https://loom.com",
+        description: "Record your screen, face, or both with one click. Perfect for product demos, bug reports, tutorials, and async updates. Instant shareable link. Viewers can comment at specific timestamps. Free tier limited to 5 minutes per video. Reduces meetings by 50% if your team adopts it. Used by 14M+ people.",
+        logo: "📹",
+        featured: false,
+        iUseThis: true,
+        reviews: []
+    },
+    {
+        name: "Zapier",
+        tagline: "Connect your apps and automate workflows",
+        category: "Marketing",
+        pricing: "Free / €20/mo",
+        website: "https://zapier.com",
+        description: "The duct tape of the internet. Connect 5,000+ apps without code. When X happens, do Y automatically. Save form submissions to Sheets, send Slack notifications for new customers, update CRM from emails. Free tier includes 100 tasks/month. Essential automation tool. Saves hours of manual work. Multi-step Zaps chain actions.",
+        logo: "⚡",
+        featured: true,
+        iUseThis: true,
+        reviews: []
+    },
+    {
+        name: "ActiveCampaign",
+        tagline: "Email marketing automation and CRM",
+        category: "Marketing",
+        pricing: "€29/mo",
+        website: "https://activecampaign.com",
+        description: "Powerful email automation with built-in CRM. Visual automation builder creates complex workflows. Lead scoring identifies hot prospects. SMS marketing included. Site tracking shows who visits your website. Good middle ground between Mailchimp and HubSpot. Starts at $29/mo for 1,000 contacts. Popular with online course creators.",
+        logo: "✉️",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Constant Contact",
+        tagline: "Email marketing made simple",
+        category: "Marketing",
+        pricing: "€12/mo",
+        website: "https://constantcontact.com",
+        description: "Simple email marketing for small businesses. Easy to use with good templates. Event registration and social media tools included. Better for traditional businesses than tech startups. Excellent customer support. Free 60-day trial. Starts at $12/mo for 500 contacts. Used by 650K+ small businesses.",
+        logo: "📧",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Drip",
+        tagline: "E-commerce CRM and email marketing",
+        category: "Marketing",
+        pricing: "€39/mo",
+        website: "https://drip.com",
+        description: "Email marketing built specifically for e-commerce. Great automation for abandoned carts, post-purchase sequences, and customer win-back. Deep Shopify integration. Segment customers by purchase behavior. Visual workflow builder. Starts at $39/mo for 2,500 contacts. Used by 30K+ e-commerce brands.",
+        logo: "💧",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Klaviyo",
+        tagline: "Email and SMS marketing for e-commerce",
+        category: "Marketing",
+        pricing: "Free / €20/mo",
+        website: "https://klaviyo.com",
+        description: "The most powerful email and SMS platform for e-commerce. Deep Shopify integration syncs customer data, orders, and products. Segmentation based on purchase behavior, lifetime value, and more. Automated flows for abandoned cart, welcome series, and post-purchase. Free up to 250 contacts. Used by 143K+ brands.",
+        logo: "📨",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Sendinblue",
+        tagline: "Email marketing, SMS, and chat platform",
+        category: "Marketing",
+        pricing: "Free / €25/mo",
+        website: "https://sendinblue.com",
+        description: "Email marketing with SMS and live chat included. Generous free tier - up to 300 emails/day forever. Marketing automation, transactional emails, and landing pages. CRM functionality included. Better pricing than Mailchimp for many use cases. Used by 500K+ businesses. Recently rebranded to Brevo.",
+        logo: "💌",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Unbounce",
+        tagline: "Landing page builder for marketers",
+        category: "Marketing",
+        pricing: "€90/mo",
+        website: "https://unbounce.com",
+        description: "Create and test landing pages without code. Built-in A/B testing and conversion optimization. Drag-and-drop builder with 100+ templates. Popups and sticky bars capture leads. AI copywriting helps write headlines. Integrates with all marketing tools. Expensive but powerful. Used by 15K+ marketers.",
+        logo: "📄",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Leadpages",
+        tagline: "Landing pages and lead generation",
+        category: "Marketing",
+        pricing: "€37/mo",
+        website: "https://leadpages.com",
+        description: "Build high-converting landing pages quickly. Drag-and-drop builder with mobile-responsive templates. Lead capture popups. Built-in analytics. A/B testing on higher plans. Cheaper alternative to Unbounce. Good for coaches, consultants, and small businesses. Free 14-day trial.",
+        logo: "📋",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "OptinMonster",
+        tagline: "Lead generation software for websites",
+        category: "Marketing",
+        pricing: "€9/mo",
+        website: "https://optinmonster.com",
+        description: "Create popups and opt-in forms that convert. Drag-and-drop builder. Exit-intent technology shows popup when user is about to leave. A/B testing, targeting rules, and analytics included. Works with any website or platform. Starts at $9/mo. Used by 1.2M+ websites.",
+        logo: "👹",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Sumo",
+        tagline: "Marketing tools for growing your website",
+        category: "Marketing",
+        pricing: "Free / €39/mo",
+        website: "https://sumo.com",
+        description: "Suite of tools to grow your email list. Popups, welcome mats, scroll boxes, and smart bars. Heat maps show where people click. Share buttons increase social shares. Free plan includes full features with Sumo branding. Pro removes branding and adds advanced features.",
+        logo: "🥋",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Lemlist",
+        tagline: "Cold email outreach that gets replies",
+        category: "Marketing",
+        pricing: "€59/mo",
+        website: "https://lemlist.com",
+        description: "Personalized cold email at scale. Dynamic images show prospect's company logo or name. Automated follow-ups increase reply rates. Email warm-up improves deliverability. Track opens, clicks, and replies. LinkedIn automation included. Good for B2B sales and agencies. Used by 10K+ sales teams.",
+        logo: "📮",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Reply.io",
+        tagline: "AI-powered sales engagement platform",
+        category: "Marketing",
+        pricing: "€60/mo",
+        website: "https://reply.io",
+        description: "Multichannel outreach - email, LinkedIn, calls, and SMS from one platform. AI writes personalized emails. Sequences automate follow-ups. Email verification ensures deliverability. Meeting scheduler books calls automatically. Used by 2,500+ sales teams.",
+        logo: "🎯",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Apollo.io",
+        tagline: "Sales intelligence and engagement platform",
+        category: "Marketing",
+        pricing: "Free / €49/mo",
+        website: "https://apollo.io",
+        description: "Database of 275M+ contacts with email addresses and phone numbers. Find prospects, verify emails, and send sequences. Chrome extension shows contact info on LinkedIn. Free plan includes 50 email credits/month. Great for B2B prospecting. Used by 10K+ sales teams.",
+        logo: "🚀",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Instantly.ai",
+        tagline: "Cold email software that scales",
+        category: "Marketing",
+        pricing: "€30/mo",
+        website: "https://instantly.ai",
+        description: "Send unlimited cold emails from unlimited accounts. Email warm-up improves deliverability. Inbox rotation spreads volume across accounts. Built-in email verification. Unlimited campaigns and sequences. Cheaper than Lemlist. Popular with agencies. Used by 25K+ users.",
+        logo: "⚡",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Substack",
+        tagline: "Start a paid newsletter in minutes",
+        category: "Marketing",
+        pricing: "Free (10% of revenue)",
+        website: "https://substack.com",
+        description: "The easiest way to start a paid newsletter. Built-in payments, subscriber management, and beautiful email design. Free to start, they take 10% of subscription revenue. No monthly fees. Owns your audience relationship. Used by 1M+ writers. Great for creators, journalists, and experts monetizing their knowledge.",
+        logo: "📰",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Ghost",
+        tagline: "Turn your audience into a business",
+        category: "Marketing",
+        pricing: "€9/mo (self-hosted) / €31/mo (hosted)",
+        website: "https://ghost.org",
+        description: "Open-source publishing platform for newsletters and membership sites. Beautiful themes, built-in SEO, and native newsletters. Paid memberships and subscriptions. Self-hostable or use Ghost(Pro) hosting. More control than Substack but requires more technical knowledge. Used by 50K+ publications.",
+        logo: "👻",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
 
-            // DESIGN
-            {
-                name: "Figma",
-                tagline: "Collaborative design tool",
-                category: "Design",
-                pricing: "Free / €12/mo",
-                website: "https://figma.com",
-                description: "Browser-based design tool with real-time collaboration. Industry standard for UI/UX design with generous free tier.",
-                logo: "🎨",
-                featured: true,
-                iUseThis: true,
-                reviews: []
-            },
-            {
-                name: "Canva Pro",
-                tagline: "Design graphics like a pro",
-                category: "Design",
-                pricing: "Free / €11/mo",
-                website: "https://canva.com",
-                description: "Drag-and-drop design tool with templates for social media and marketing. Perfect for non-designers.",
-                logo: "🎭",
-                featured: false,
-                iUseThis: false,
-                reviews: []
-            },
-            {
-                name: "Miro",
-                tagline: "Visual collaboration platform",
-                category: "Design",
-                pricing: "Free / €8/mo",
-                website: "https://miro.com",
-                description: "Online whiteboard for brainstorming, planning, and workshops. Perfect for remote team collaboration.",
-                logo: "🎨",
-                featured: false,
-                iUseThis: false,
-                reviews: []
-            },
-            {
-                name: "Webflow",
-                tagline: "Visual website builder",
-                category: "Design",
-                pricing: "Free / €14/mo",
-                website: "https://webflow.com",
-                description: "Professional no-code website builder with CMS. Popular with designers who want control without coding.",
-                logo: "🌊",
-                featured: false,
-                iUseThis: false,
-                reviews: []
-            },
+    // ==================== DESIGN (20 TOOLS) ====================
+    {
+        name: "Figma",
+        tagline: "Collaborative design tool for teams",
+        category: "Design",
+        pricing: "Free / €12/mo",
+        website: "https://figma.com",
+        description: "Browser-based design tool with real-time collaboration. Multiple designers can work on the same file simultaneously, like Google Docs for design. Vector editing, prototyping, design systems (components and variants), and developer handoff all in one tool. Plugins extend functionality infinitely. The free tier includes 3 Figma files and unlimited personal files.",
+        logo: "🎨",
+        featured: true,
+        iUseThis: true,
+        reviews: []
+    },
+    {
+        name: "Canva Pro",
+        tagline: "Design anything - graphics, videos, presentations",
+        category: "Design",
+        pricing: "Free / €11/mo",
+        website: "https://canva.com",
+        description: "Drag-and-drop design tool with 100K+ templates for social media, presentations, logos, flyers, and more. Perfect for non-designers. Magic Resize changes designs for different platforms instantly. Pro tier adds Brand Kit (save colors/fonts/logos), background remover, and premium templates. Teams can collaborate. Not for complex illustration work.",
+        logo: "🎭",
+        featured: true,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Miro",
+        tagline: "Visual workspace for innovation",
+        category: "Design",
+        pricing: "Free / €8/mo",
+        website: "https://miro.com",
+        description: "Infinite digital whiteboard that makes remote collaboration feel natural. Brainstorm with sticky notes, create flowcharts, map user journeys, run retrospectives, and workshop together in real-time. The template library covers every use case from agile workflows to design thinking. Video chat built-in. Free tier includes 3 editable boards.",
+        logo: "🎨",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Framer",
+        tagline: "Design and ship your dream site without code",
+        category: "Design",
+        pricing: "Free / €15/mo",
+        website: "https://framer.com",
+        description: "Design websites in Figma-like interface, publish with one click. Built-in CMS, scroll animations, and responsive design. No code required but supports React components for advanced users. The sites are React under the hood, so they're fast and SEO-friendly. Free tier includes 2 sites. Perfect for portfolios and landing pages.",
+        logo: "✨",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Webflow",
+        tagline: "Visual website builder for professionals",
+        category: "Design",
+        pricing: "Free / €14/mo",
+        website: "https://webflow.com",
+        description: "Professional no-code website builder with CMS. Design pixel-perfect websites visually while Webflow writes production-ready HTML, CSS, and JavaScript. The CMS powers blogs, portfolios, and dynamic sites. E-commerce functionality included. Popular with designers who want control without coding. Steeper learning curve than Wix but much more powerful.",
+        logo: "🌊",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Adobe Creative Cloud",
+        tagline: "Industry-standard creative tools",
+        category: "Design",
+        pricing: "€60/mo",
+        website: "https://adobe.com/creativecloud",
+        description: "Photoshop, Illustrator, Premiere Pro, After Effects, and 20+ more creative apps. Industry standard for professional designers, photographers, and video editors. Cloud storage and collaboration features. Expensive but essential for many creative professionals. Individual apps available separately. Student discount available.",
+        logo: "🅰️",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Sketch",
+        tagline: "Design tool for Mac",
+        category: "Design",
+        pricing: "€10/mo",
+        website: "https://sketch.com",
+        description: "Mac-only design tool that was the industry standard before Figma. Still loved by many designers for its speed and native Mac performance. Symbols and text styles create design systems. Plugin ecosystem is mature. Cloud collaboration added but not as smooth as Figma. Great for solo designers on Mac.",
+        logo: "💎",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Affinity Designer",
+        tagline: "Professional graphic design software",
+        category: "Design",
+        pricing: "€70 one-time",
+        website: "https://affinity.serif.com/designer",
+        description: "Adobe Illustrator alternative with one-time purchase. Vector graphics, layouts, and mockups. Fast performance even with huge files. Works offline. Available for Mac, Windows, and iPad. No subscription - pay once, use forever. Great for designers tired of Adobe's subscription model. Version 2 released in 2022.",
+        logo: "◇",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Lunacy",
+        tagline: "Free design software for Windows",
+        category: "Design",
+        pricing: "Free",
+        website: "https://icons8.com/lunacy",
+        description: "Free Sketch alternative for Windows. Opens and edits Sketch files. Built-in graphics (icons, photos, illustrations) save time. AI tools remove backgrounds and upscale images. Works offline. Completely free with no limitations. Great for Windows users who can't use Sketch or don't want to pay for Figma.",
+        logo: "🌙",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Penpot",
+        tagline: "Open-source design and prototyping platform",
+        category: "Design",
+        pricing: "Free / Open Source",
+        website: "https://penpot.app",
+        description: "Open-source Figma alternative. Browser-based, real-time collaboration, and self-hostable. Growing community and feature set. Not as polished as Figma yet, but rapidly improving. Great for teams who want to own their design tool infrastructure. Free hosted version available.",
+        logo: "🖊️",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Pixlr",
+        tagline: "Online photo editor",
+        category: "Design",
+        pricing: "Free / €5/mo",
+        website: "https://pixlr.com",
+        description: "Photoshop-like editor in your browser. Edit photos, remove backgrounds, apply filters, and create collages. No download required. Free version includes ads and watermarks. Premium removes ads and adds AI tools. Good for quick edits when you don't have Photoshop installed.",
+        logo: "📷",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Remove.bg",
+        tagline: "Remove image backgrounds in seconds",
+        category: "Design",
+        pricing: "Free / €9/mo",
+        website: "https://remove.bg",
+        description: "AI-powered background removal. Upload an image and get a transparent PNG in 5 seconds. Free tier includes low-res downloads. Premium adds high-res, batch processing, and API access. Incredibly accurate. Used by millions. Saves hours compared to manual selection. Integrations for Photoshop, Figma, and Canva.",
+        logo: "🎭",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Unsplash",
+        tagline: "Beautiful free images and photos",
+        category: "Design",
+        pricing: "Free",
+        website: "https://unsplash.com",
+        description: "The largest free photo library on the internet. 5M+ high-quality images. All photos are free to use commercially without attribution (though it's appreciated). Integrated into Figma, Canva, and many other design tools. Upload your own photos to build a portfolio. Used by designers worldwide.",
+        logo: "📸",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Pexels",
+        tagline: "Free stock photos and videos",
+        category: "Design",
+        pricing: "Free",
+        website: "https://pexels.com",
+        description: "Free stock photos and videos for commercial use. No attribution required. Library of millions of images and thousands of videos. Curated collections make finding the right image easy. Mobile apps available. Owned by Canva. Great alternative to Unsplash with slightly different aesthetic.",
+        logo: "📷",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "IconScout",
+        tagline: "Icons, illustrations, and 3D assets",
+        category: "Design",
+        pricing: "Free / €15/mo",
+        website: "https://iconscout.com",
+        description: "5M+ design assets including icons, illustrations, 3D assets, and Lottie animations. Free tier includes basic icons. Premium unlocks everything with commercial license. Plugins for Figma, Sketch, Adobe XD. Great for finding consistent icon sets. Saves time compared to designing custom icons.",
+        logo: "🎨",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Flaticon",
+        tagline: "Free vector icons and stickers",
+        category: "Design",
+        pricing: "Free / €10/mo",
+        website: "https://flaticon.com",
+        description: "The largest database of free icons - 10M+ icons in multiple formats (SVG, PNG, EPS). Free with attribution, or Premium for commercial use without attribution. Collections make finding consistent icon sets easy. Plugins for Photoshop, Figma, and Canva. Owned by Freepik.",
+        logo: "📐",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Coolors",
+        tagline: "Super fast color schemes generator",
+        category: "Design",
+        pricing: "Free / €5/mo",
+        website: "https://coolors.co",
+        description: "Generate perfect color palettes in seconds. Press spacebar to generate new palettes. Lock colors you like and generate around them. Extract colors from images. Export to various formats. Trending palettes for inspiration. Free with some limitations. Pro adds saved palettes and advanced features. Essential tool for designers.",
+        logo: "🎨",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Squarespace",
+        tagline: "Website builder for creatives",
+        category: "Design",
+        pricing: "€14/mo",
+        website: "https://squarespace.com",
+        description: "Beautiful templates for portfolios, blogs, and online stores. Great for non-technical creatives. Excellent template designs. Built-in e-commerce, blogging, and SEO. 24/7 customer support. More expensive than alternatives but design quality is top-notch. 14-day free trial. Popular with photographers, artists, and restaurants.",
+        logo: "⬜",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Wix",
+        tagline: "Easy website builder for everyone",
+        category: "Design",
+        pricing: "Free / €14/mo",
+        website: "https://wix.com",
+        description: "Drag-and-drop website builder with 800+ templates. Good for small businesses, portfolios, and online stores. Wix ADI (Artificial Design Intelligence) creates sites automatically. App market adds functionality. Free plan includes Wix ads. Premium removes ads and adds custom domain. Used by 200M+ users. Very beginner-friendly.",
+        logo: "🌐",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Spline",
+        tagline: "Design 3D graphics in the browser",
+        category: "Design",
+        pricing: "Free / €9/mo",
+        website: "https://spline.design",
+        description: "Create 3D designs, animations, and interactive experiences in your browser. Export to React, iOS, or Android. Real-time collaboration. No 3D modeling experience required. Free tier is generous. Great for creating 3D website elements, product mockups, and illustrations. Growing in popularity for modern web design.",
+        logo: "🎭",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
 
-            // ANALYTICS
-            {
-                name: "Fathom Analytics",
-                tagline: "Simple, privacy-first analytics",
-                category: "Analytics",
-                pricing: "€14/mo",
-                website: "https://usefathom.com",
-                description: "Google Analytics alternative without cookies or GDPR headaches. Clean dashboard with essential metrics only.",
-                logo: "📊",
-                featured: true,
-                iUseThis: true,
-                reviews: []
-            },
-            {
-                name: "Plausible",
-                tagline: "Lightweight and privacy-friendly analytics",
-                category: "Analytics",
-                pricing: "€9/mo",
-                website: "https://plausible.io",
-                description: "Open-source analytics with a script 45x smaller than Google Analytics. GDPR compliant.",
-                logo: "📈",
-                featured: false,
-                iUseThis: false,
-                reviews: []
-            },
-            {
-                name: "Google Analytics",
-                tagline: "Web analytics by Google",
-                category: "Analytics",
-                pricing: "Free",
-                website: "https://analytics.google.com",
-                description: "Free analytics platform with detailed insights. Powerful but complex and raises privacy concerns.",
-                logo: "📈",
-                featured: false,
-                iUseThis: false,
-                reviews: []
-            },
-            {
-                name: "Hotjar",
-                tagline: "Website heatmaps and feedback",
-                category: "Analytics",
-                pricing: "Free / €32/mo",
-                website: "https://hotjar.com",
-                description: "See how users actually interact with your site through heatmaps, recordings, and surveys.",
-                logo: "🔥",
-                featured: false,
-                iUseThis: false,
-                reviews: []
-            },
+    // ==================== ANALYTICS (15 TOOLS) ====================
+    {
+        name: "Fathom Analytics",
+        tagline: "Simple, privacy-first website analytics",
+        category: "Analytics",
+        pricing: "€14/mo",
+        website: "https://usefathom.com",
+        description: "Google Analytics alternative without cookies or GDPR headaches. Clean dashboard with essential metrics only - visitors, page views, referrers, and goals. No tracking consent required. Loads in 1KB. Uptime monitoring included. 7-day free trial. Used by 10K+ websites. Perfect for privacy-conscious website owners. Canadian-owned.",
+        logo: "📊",
+        featured: true,
+        iUseThis: true,
+        reviews: []
+    },
+    {
+        name: "Plausible",
+        tagline: "Lightweight and privacy-friendly analytics",
+        category: "Analytics",
+        pricing: "€9/mo",
+        website: "https://plausible.io",
+        description: "Open-source analytics with a script 45x smaller than Google Analytics (<1KB). GDPR, CCPA, and PECR compliant. No cookies, so no consent banners needed. Simple dashboard shows all essential metrics. Self-hostable if you want. Starts at €9/mo. Growing fast among indie hackers and privacy-focused developers.",
+        logo: "📈",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Google Analytics",
+        tagline: "Free web analytics from Google",
+        category: "Analytics",
+        pricing: "Free",
+        website: "https://analytics.google.com",
+        description: "The most popular analytics platform. Free and powerful with detailed insights. GA4 (latest version) tracks events instead of pageviews. Machine learning predicts future actions. Can be overwhelming with too many features. Privacy concerns in EU. Requires cookie consent banners. Heavy script impacts page speed. But it's free and comprehensive.",
+        logo: "📈",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Hotjar",
+        tagline: "Website heatmaps and behavior analytics",
+        category: "Analytics",
+        pricing: "Free / €32/mo",
+        website: "https://hotjar.com",
+        description: "See how users actually interact with your site through heatmaps, session recordings, and surveys. Heatmaps show where people click, scroll, and move. Recordings replay actual user sessions. Surveys collect feedback. Funnels show where users drop off. Free plan includes 35 daily sessions. Essential for conversion optimization.",
+        logo: "🔥",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Mixpanel",
+        tagline: "Product analytics for growth",
+        category: "Analytics",
+        pricing: "Free / €20/mo",
+        website: "https://mixpanel.com",
+        description: "Track user behavior and product usage with event-based analytics. Cohort analysis shows retention. Funnels reveal drop-off points. A/B test results integrated. User profiles show individual journeys. Free tier includes 100K tracked users/month. Better than Google Analytics for product analytics. Used by Uber, Netflix, and Spotify.",
+        logo: "📊",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Amplitude",
+        tagline: "Product analytics platform",
+        category: "Analytics",
+        pricing: "Free / €49/mo",
+        website: "https://amplitude.com",
+        description: "Understand user behavior with cohort analysis, retention tracking, and funnel analytics. Behavioral cohorts segment users automatically. Predictive analytics forecasts churn. Experimentation platform for A/B testing. Free tier includes 10M events/month. Great for product teams building data-driven features. Used by 50K+ companies.",
+        logo: "📈",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Heap",
+        tagline: "Automatic product analytics",
+        category: "Analytics",
+        pricing: "Free / €3,600/year",
+        website: "https://heap.io",
+        description: "Captures every user interaction automatically without manual event tracking. Retroactively analyze data - no need to decide what to track upfront. Session replay shows what users did. Funnel analysis and retention cohorts included. Free tier includes 10K sessions/month. Premium pricing is steep but the auto-capture is unique.",
+        logo: "📉",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Crazy Egg",
+        tagline: "Heatmap and A/B testing tool",
+        category: "Analytics",
+        pricing: "€29/mo",
+        website: "https://crazyegg.com",
+        description: "Visualize where users click, scroll, and engage with heatmaps. Session recordings show user journeys. A/B testing compares page variations. Simple setup without complex configuration. Starts at €29/mo for 100K pageviews. Good for small businesses and marketers. Simpler than Hotjar but less features.",
+        logo: "🥚",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Simple Analytics",
+        tagline: "Privacy-first Google Analytics alternative",
+        category: "Analytics",
+        pricing: "€9/mo",
+        website: "https://simpleanalytics.com",
+        description: "Clean, simple analytics without cookies. GDPR, CCPA, and PECR compliant. Lightweight script (<3KB). Public dashboard option shows your stats to the world. Events tracking for goals. Starts at €9/mo for 100K pageviews. Open-source mindset. Great for indie hackers and privacy-focused developers.",
+        logo: "📊",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Clicky",
+        tagline: "Real-time web analytics",
+        category: "Analytics",
+        pricing: "Free / €10/mo",
+        website: "https://clicky.com",
+        description: "Real-time analytics shows visitors on your site right now. See individual visitor actions, heat maps, and uptime monitoring. Privacy-focused option available. Free tier includes 3K daily pageviews. Been around since 2006. Loyal user base. Good alternative to Google Analytics with real-time focus.",
+        logo: "👆",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Matomo",
+        tagline: "Open-source Google Analytics alternative",
+        category: "Analytics",
+        pricing: "Free (self-hosted) / €19/mo (cloud)",
+        website: "https://matomo.org",
+        description: "Open-source analytics platform with full data ownership. Self-host for free or use Matomo Cloud. GDPR compliant with privacy controls. Heatmaps, session recordings, and A/B testing available. More complex setup than Plausible but more features. Used by 1M+ websites including governments and universities.",
+        logo: "📈",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Splitbee",
+        tagline: "Analytics and automation for indie makers",
+        category: "Analytics",
+        pricing: "Free / €29/mo",
+        website: "https://splitbee.io",
+        description: "Analytics, A/B testing, and automation in one tool. Funnels show conversion paths. Automations trigger actions based on user behavior. Beautiful dashboard. Free tier includes 2,500 events/month. Built for indie makers. Clean API. Note: Acquired by Vercel in 2022, future uncertain.",
+        logo: "🐝",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "PostHog",
+        tagline: "Open-source product analytics",
+        category: "Analytics",
+        pricing: "Free / €0.00031/event",
+        website: "https://posthog.com",
+        description: "Open-source product analytics platform. Session recording, feature flags, A/B testing, and analytics in one. Self-hostable or use PostHog Cloud. Generous free tier - 1M events/month. Event-based pricing after that. Great for startups wanting all-in-one product tools. Growing fast.",
+        logo: "🦔",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Segment",
+        tagline: "Customer data platform",
+        category: "Analytics",
+        pricing: "Free / €120/mo",
+        website: "https://segment.com",
+        description: "Collect user data once with Segment, send it everywhere. Connect analytics tools (Google Analytics, Mixpanel, Amplitude) without extra code. Customer data warehouse included. Free tier includes 1,000 visitors/month. Expensive at scale but incredibly useful. Owned by Twilio. Used by IBM, Intuit, and Gap.",
+        logo: "📊",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Usermaven",
+        tagline: "Privacy-friendly product analytics",
+        category: "Analytics",
+        pricing: "Free / €25/mo",
+        website: "https://usermaven.com",
+        description: "Product analytics without the complexity. Auto-tracking captures events automatically. Funnels, cohorts, and retention analysis. GDPR compliant. No-code event tracking. Free tier includes 25K events/month. Simpler than Mixpanel. Good for small teams wanting product insights.",
+        logo: "📈",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
 
-            // FINANCE
-            {
-                name: "Stripe",
-                tagline: "Payment infrastructure for the internet",
-                category: "Finance",
-                pricing: "2.9% + fees",
-                website: "https://stripe.com",
-                description: "Accept payments online with flexible APIs. Industry standard for subscription billing and one-time payments.",
-                logo: "💳",
-                featured: true,
-                iUseThis: true,
-                reviews: []
-            },
-            {
-                name: "Lemon Squeezy",
-                tagline: "Payments for digital products",
-                category: "Finance",
-                pricing: "5% + fees",
-                website: "https://lemonsqueezy.com",
-                description: "Merchant of record for digital products. They handle taxes, VAT, and compliance.",
-                logo: "🍋",
-                featured: false,
-                iUseThis: false,
-                reviews: []
-            },
-            {
-                name: "Wise",
-                tagline: "International money transfers",
-                category: "Finance",
-                pricing: "0.5-2% fees",
-                website: "https://wise.com",
-                description: "Send money internationally at real exchange rates. Much cheaper than traditional banks.",
-                logo: "💸",
-                featured: false,
-                iUseThis: true,
-                reviews: []
-            },
-
-            // AI TOOLS
-            {
-                name: "ChatGPT Plus",
-                tagline: "AI assistant that understands context",
-                category: "AI Tools",
-                pricing: "€20/mo",
-                website: "https://chat.openai.com",
-                description: "Access to GPT-4 with priority access during peak times. Essential tool for writing, coding, and brainstorming.",
-                logo: "🤖",
-                featured: true,
-                iUseThis: false,
-                reviews: []
-            },
-            {
-                name: "Claude Pro",
-                tagline: "AI assistant for work",
-                category: "AI Tools",
-                pricing: "€20/mo",
-                website: "https://claude.ai",
-                description: "Anthropic's AI assistant with larger context windows. Great for analyzing documents.",
-                logo: "🧠",
-                featured: false,
-                iUseThis: true,
-                reviews: []
-            },
-            {
-                name: "Grammarly",
-                tagline: "Write with confidence",
-                category: "SEO & Content",
-                pricing: "Free / €12/mo",
-                website: "https://grammarly.com",
-                description: "AI writing assistant that checks grammar, tone, and clarity. Works everywhere you write across browsers and apps.",
-                logo: "✏️",
-                featured: true,
-                iUseThis: true,
-                reviews: []
-            },
-            {
-                name: "Perplexity",
-                tagline: "AI-powered search engine",
-                category: "AI Tools",
-                pricing: "Free / €20/mo",
-                website: "https://perplexity.ai",
-                description: "Search engine that uses AI to give direct answers with sources. Great alternative to Google for research.",
-                logo: "🔍",
-                featured: false,
-                iUseThis: false,
-                reviews: []
-            },
-
-            // COMMUNICATION
-            {
-                name: "Slack",
-                tagline: "Where work happens",
-                category: "Communication",
-                pricing: "Free / €7/mo",
-                website: "https://slack.com",
-                description: "Team messaging with channels, integrations, and search. Free plan works great for small teams.",
-                logo: "💬",
-                featured: false,
-                iUseThis: true,
-                reviews: []
-            },
-
-            // SECURITY
-            {
-                name: "1Password",
-                tagline: "Password manager for families and teams",
-                category: "Security",
-                pricing: "€3/mo",
-                website: "https://1password.com",
-                description: "Secure password manager with excellent UX. Family plan covers 5 people with shared vaults.",
-                logo: "🔐",
-                featured: false,
-                iUseThis: true,
-                reviews: []
-            },
-
-            // ECOMMERCE
-            {
-                name: "Gumroad",
-                tagline: "Sell products directly to your audience",
-                category: "E-commerce",
-                pricing: "10% fee",
-                website: "https://gumroad.com",
-                description: "Simple platform for selling digital products, memberships, and courses. No monthly fees, just 10% per sale.",
-                logo: "🛒",
-                featured: true,
-                iUseThis: false,
-                reviews: []
-            },
-
-            // Add ALL your other tools here from your original code...
-            // I've shown you the pattern - keep adding all 100+ tools you had!
-        ];
+    // ==================== FINANCE (15 TOOLS) ====================
+    {
+        name: "Stripe",
+        tagline: "Payment infrastructure for the internet",
+        category: "Finance",
+        pricing: "2.9% + €0.30",
+        website: "https://stripe.com",
+        description: "Accept payments online with flexible APIs. Industry standard for subscription billing and one-time payments. Checkout creates beautiful payment pages. Billing handles subscriptions and invoicing. Connect enables marketplace payments. Radar fights fraud. Excellent documentation and libraries for every language. Used by Amazon, Google, and Shopify.",
+        logo: "💳",
+        featured: true,
+        iUseThis: true,
+        reviews: []
+    },
+    {
+        name: "Lemon Squeezy",
+        tagline: "Payments, tax, and subscriptions for digital products",
+        category: "Finance",
+        pricing: "5% + fees",
+        website: "https://lemonsqueezy.com",
+        description: "Merchant of record for digital products - they handle taxes, VAT, and compliance worldwide. Sell software, e-books, courses, and subscriptions. Beautiful checkout experience. Affiliate program built-in. Webhooks and API for integrations. 5% fee + payment processing. Great for indie makers who don't want tax headaches.",
+        logo: "🍋",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Paddle",
+        tagline: "Payment infrastructure for SaaS",
+        category: "Finance",
+        pricing: "5% + fees",
+        website: "https://paddle.com",
+        description: "Merchant of record that handles payments, taxes, and subscriptions for SaaS. They're the seller of record, handling all compliance. Subscription management, invoicing, and dunning included. 5% + payment processing fees. More expensive than Stripe but handles tax complexity. Popular with B2B SaaS. Used by monday.com and Notion.",
+        logo: "🚣",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "PayPal",
+        tagline: "Send and receive payments online",
+        category: "Finance",
+        pricing: "2.9% + €0.30",
+        website: "https://paypal.com",
+        description: "The OG online payment platform. Widely trusted by consumers. Accept credit cards, PayPal balance, and bank transfers. Invoice clients. Send money internationally. Business account includes payment buttons and checkout. 2.9% + $0.30 per transaction. Higher fees than Stripe but better buyer trust for some markets.",
+        logo: "💰",
+        featured: false,
+        iUseThis: false,
+        reviews: []
+    },
+    {
+        name: "Wise",
+        tagline: "International money transfers at real exchange rates",
+        category: "Finance",
+        pricing: "0.5-2% fees",
+        website: "https://wise.com",
+        description: "Send money internationally at real exchange rates. Much cheaper than traditional banks (PayPal charges 5%). Business accounts hold 40+ currencies. Receive money like a local in 10+ currencies. Wise debit card spends in any currency at mid-market rate. Used by 13M+ people. Essential for international freelancers and businesses.",
+        logo: "💸",
+        featured: false,
+        iUseThis: true,
+        reviews: []
+    },
+    {
+        name: "Xero",
+        tagline: "Beautiful accounting software",
+        category: "Finance",
+        pricing: "€13/mo",
+        website: "https://xero.com",
+        description: "Cloud accounting with invoicing, expenses, and bank reconciliation. Beautiful interface that makes accounting less painful. Connects to 1,000+ apps. Automatic bank feeds. Inventory management. Projects and time tracking. Popular alternative to QuickBooks, especially outside the US. Used by 3.5M+ subscribers.",
+        logo: "📒",
+        featured: false
+        iUseThis: true,
+        reviews: []
+    }
+    ];
 
         const categories = ["All", "Productivity", "Developer Tools", "Marketing", "Design", "Analytics", "Finance", "AI Tools", "Communication", "Security", "E-commerce", "Automation", "SEO & Content"];
 
-        // Blog posts
-        const blogPosts = [
-            {
-                id: 1,
-                title: "10 Essential SaaS Tools Every Startup Needs in 2025",
-                slug: "essential-saas-tools-startups-2025",
-                excerpt: "Starting a new business? Here are the must-have tools that won't break the bank.",
-                content: `<p>Full blog content here...</p>`,
-                author: "Jakub",
-                date: "2025-01-15",
-                category: "Guides",
-                image: "📚",
-                readTime: "5 min read"
-            }
-        ];
-
-        // State management
         let state = {
             currentPage: 'home',
             searchTerm: '',
@@ -670,17 +1502,13 @@
             showModal: false,
             selectedTool: null,
             recentlyViewed: JSON.parse(localStorage.getItem('recentlyViewed') || '[]'),
-            selectedBlogPost: null,
             reviews: JSON.parse(localStorage.getItem('reviews') || '{}')
         };
 
-        // ==================== HELPER FUNCTIONS ====================
-        
         function filterTools() {
             let filtered = tools.filter(tool => {
                 const matchesSearch = tool.name.toLowerCase().includes(state.searchTerm.toLowerCase()) ||
-                                    tool.tagline.toLowerCase().includes(state.searchTerm.toLowerCase()) ||
-                                    tool.description.toLowerCase().includes(state.searchTerm.toLowerCase());
+                                    tool.tagline.toLowerCase().includes(state.searchTerm.toLowerCase());
                 const matchesCategory = state.selectedCategory === 'All' || tool.category === state.selectedCategory;
                 return matchesSearch && matchesCategory;
             });
@@ -705,17 +1533,9 @@
             render();
         }
 
-        function addToRecentlyViewed(tool) {
-            state.recentlyViewed = state.recentlyViewed.filter(t => t.name !== tool.name);
-            state.recentlyViewed.unshift(tool);
-            state.recentlyViewed = state.recentlyViewed.slice(0, 6);
-            localStorage.setItem('recentlyViewed', JSON.stringify(state.recentlyViewed));
-        }
-
         function openToolModal(tool) {
             state.selectedTool = tool;
             state.showModal = true;
-            addToRecentlyViewed(tool);
             render();
             document.body.style.overflow = 'hidden';
         }
@@ -727,29 +1547,23 @@
             document.body.style.overflow = 'auto';
         }
 
-        // ==================== FORMSPREE INTEGRATION ====================
-        
         async function subscribeNewsletter(email) {
             try {
                 const response = await fetch('https://formspree.io/f/xldobnle', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         email: email,
                         type: 'newsletter',
-                        _subject: '🎉 New Newsletter Subscriber - ToolScout'
+                        _subject: '🎉 New Newsletter Subscriber'
                     })
                 });
-                
                 if (response.ok) {
-                    alert('✅ Thanks for subscribing! We\'ll send you our first newsletter soon.');
+                    alert('✅ Thanks for subscribing!');
                     return true;
                 }
             } catch (error) {
-                console.error('Newsletter error:', error);
-                alert('Something went wrong. Please try again or email us at hello@toolscout.co');
+                alert('Error. Please try again.');
                 return false;
             }
         }
@@ -758,43 +1572,33 @@
             try {
                 const response = await fetch('https://formspree.io/f/xldobnle', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         ...formData,
                         type: 'tool-submission',
-                        _subject: `🛠️ New Tool Submission: ${formData.toolName}`
+                        _subject: `New Tool: ${formData.toolName}`
                     })
                 });
-                
                 if (response.ok) {
-                    alert('✅ Thanks for submitting! We\'ll review it soon.');
+                    alert('✅ Thanks for submitting!');
                     return true;
                 }
             } catch (error) {
-                console.error('Submit error:', error);
-                alert('Error submitting. Please email us at hello@toolscout.co');
+                alert('Error submitting.');
                 return false;
             }
         }
 
-        // Review functions
         function submitReview(toolName, rating, comment, userName) {
-            if (!state.reviews[toolName]) {
-                state.reviews[toolName] = [];
-            }
-            
-            const review = {
+            if (!state.reviews[toolName]) state.reviews[toolName] = [];
+            state.reviews[toolName].unshift({
                 id: Date.now(),
                 userName: userName || 'Anonymous',
                 rating: parseInt(rating),
                 comment: comment,
                 date: new Date().toISOString(),
                 helpful: 0
-            };
-            
-            state.reviews[toolName].unshift(review);
+            });
             localStorage.setItem('reviews', JSON.stringify(state.reviews));
             render();
         }
@@ -802,44 +1606,36 @@
         function getAverageRating(toolName) {
             const reviews = state.reviews[toolName] || [];
             if (reviews.length === 0) return 0;
-            const sum = reviews.reduce((acc, r) => acc + r.rating, 0);
-            return (sum / reviews.length).toFixed(1);
+            return (reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length).toFixed(1);
         }
 
-        function markReviewHelpful(toolName, reviewId) {
-            const reviews = state.reviews[toolName];
-            const review = reviews.find(r => r.id === reviewId);
-            if (review) {
-                review.helpful++;
-                localStorage.setItem('reviews', JSON.stringify(state.reviews));
-                render();
-            }
-        }
-
-        // Social sharing
         function shareOnTwitter(tool) {
-            const text = `Check out ${tool.name} - ${tool.tagline} on ToolScout`;
-            const url = `${window.location.origin}`;
-            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+            const text = `Check out ${tool.name} on ToolScout`;
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.location.origin)}`, '_blank');
         }
 
         function shareOnLinkedIn(tool) {
-            const url = `${window.location.origin}`;
-            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
+            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.origin)}`, '_blank');
         }
 
-        function copyLink(tool) {
-            const url = `${window.location.origin}`;
-            navigator.clipboard.writeText(url).then(() => {
-                alert('Link copied to clipboard! 📋');
-            });
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.origin);
+            alert('Link copied! 📋');
         }
 
-        // ==================== RENDER FUNCTIONS ====================
-        
+        function getCategoryEmoji(cat) {
+            const emojis = {
+                'Productivity': '📝', 'Developer Tools': '💻', 'Marketing': '📧',
+                'Design': '🎨', 'Analytics': '📊', 'Finance': '💰',
+                'AI Tools': '🤖', 'Communication': '💬', 'Security': '🔐',
+                'E-commerce': '🛒', 'Automation': '⚡', 'SEO & Content': '🔍'
+            };
+            return emojis[cat] || '📦';
+        }
+
         function renderNav() {
             return `
-                <nav class="bg-white border-b sticky top-0 z-50 shadow-sm" role="navigation">
+                <nav class="bg-white border-b sticky top-0 z-50 shadow-sm">
                     <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
                         <button onclick="showPage('home')" class="flex items-center gap-2 hover:opacity-80">
                             <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -848,16 +1644,10 @@
                             </svg>
                             <span class="text-2xl font-bold text-indigo-600">ToolScout</span>
                         </button>
-                        <div class="flex gap-6 items-center">
+                        <div class="flex gap-6">
                             <button onclick="showPage('home')" class="font-medium ${state.currentPage === 'home' ? 'text-indigo-600' : 'text-gray-700 hover:text-indigo-600'}">Home</button>
                             <button onclick="showPage('directory')" class="font-medium ${state.currentPage === 'directory' ? 'text-indigo-600' : 'text-gray-700 hover:text-indigo-600'}">Directory</button>
-                            <button onclick="showPage('blog')" class="font-medium ${state.currentPage === 'blog' ? 'text-indigo-600' : 'text-gray-700 hover:text-indigo-600'}">Blog</button>
-                            ${state.favorites.length > 0 ? `
-                                <button onclick="showPage('favorites')" class="font-medium relative ${state.currentPage === 'favorites' ? 'text-indigo-600' : 'text-gray-700 hover:text-indigo-600'}">
-                                    Favorites
-                                    <span class="absolute -top-2 -right-2 bg-indigo-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">${state.favorites.length}</span>
-                                </button>
-                            ` : ''}
+                            ${state.favorites.length > 0 ? `<button onclick="showPage('favorites')" class="font-medium relative ${state.currentPage === 'favorites' ? 'text-indigo-600' : 'text-gray-700 hover:text-indigo-600'}">Favorites <span class="absolute -top-2 -right-2 bg-indigo-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">${state.favorites.length}</span></button>` : ''}
                             <button onclick="showPage('submit')" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 font-medium text-sm">Submit Tool</button>
                         </div>
                     </div>
@@ -867,86 +1657,24 @@
 
         function renderHomePage() {
             const featuredTools = tools.filter(t => t.featured);
-            const stats = {
-                totalTools: tools.length,
-                categories: categories.length - 1,
-                freeTools: tools.filter(t => t.pricing.toLowerCase().includes('free')).length
-            };
-
             return `
                 <div class="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 text-white py-20 px-4">
                     <div class="max-w-4xl mx-auto text-center">
-                        <h1 class="text-5xl md:text-6xl font-bold mb-4">Scout the Best SaaS Tools</h1>
+                        <h1 class="text-5xl font-bold mb-4">Scout the Best SaaS Tools</h1>
                         <p class="text-xl mb-8 opacity-90">
-                            Discover handpicked SaaS tools for founders, freelancers, and small teams. 
-                            No enterprise bloat. Just quality tools that help you build and grow.
+                            Discover handpicked SaaS tools for founders, freelancers, and small teams.
                         </p>
-                        
-                        <div class="grid grid-cols-3 gap-4 max-w-2xl mx-auto mb-8">
-                            <div class="stat-item bg-white/10 backdrop-blur-sm rounded-lg p-4">
-                                <div class="text-3xl font-bold">${stats.totalTools}+</div>
-                                <div class="text-sm opacity-90">Tools</div>
-                            </div>
-                            <div class="stat-item bg-white/10 backdrop-blur-sm rounded-lg p-4" style="animation-delay: 0.1s">
-                                <div class="text-3xl font-bold">${stats.categories}</div>
-                                <div class="text-sm opacity-90">Categories</div>
-                            </div>
-                            <div class="stat-item bg-white/10 backdrop-blur-sm rounded-lg p-4" style="animation-delay: 0.2s">
-                                <div class="text-3xl font-bold">${stats.freeTools}</div>
-                                <div class="text-sm opacity-90">Free Tools</div>
-                            </div>
-                        </div>
-
-                        <div class="flex gap-4 justify-center flex-wrap">
-                            <button onclick="showPage('directory')" class="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 shadow-lg transform hover:scale-105">
-                                Browse All Tools →
-                            </button>
-                        </div>
-                        <div class="mt-8 text-sm opacity-75">
-                            💡 Transparent affiliate disclosure: Some links may earn commissions at no extra cost to you
-                        </div>
-                    </div>
-                </div>
-
-                ${state.recentlyViewed.length > 0 ? `
-                    <div class="bg-gray-50 py-12 px-4 border-b">
-                        <div class="max-w-7xl mx-auto">
-                            <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-                                <span>👀</span> Recently Viewed
-                            </h2>
-                            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                ${state.recentlyViewed.slice(0, 3).map(tool => renderToolCard(tool)).join('')}
-                            </div>
-                        </div>
-                    </div>
-                ` : ''}
-
-                <div class="py-16 px-4">
-                    <div class="max-w-7xl mx-auto">
-                        <h2 class="text-3xl font-bold mb-8 flex items-center gap-2">
-                            <span>⭐</span> Featured Tools
-                        </h2>
-                        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                            ${featuredTools.map(tool => renderToolCard(tool)).join('')}
-                        </div>
+                        <button onclick="showPage('directory')" class="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 shadow-lg">
+                            Browse ${tools.length}+ Tools
+                        </button>
                     </div>
                 </div>
 
                 <div class="bg-gray-50 py-16 px-4">
-                    <div class="max-w-6xl mx-auto">
-                        <h2 class="text-3xl font-bold mb-8 text-center">Browse by Category</h2>
-                        <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
-                            ${categories.slice(1, 13).map(cat => `
-                                <button 
-                                    onclick="state.selectedCategory='${cat}'; showPage('directory')" 
-                                    class="bg-white border-2 border-gray-200 p-6 rounded-lg hover:border-indigo-500 hover:shadow-md transition text-left group">
-                                    <div class="text-2xl mb-2 group-hover:scale-110 transition-transform">${getCategoryEmoji(cat)}</div>
-                                    <div class="font-semibold text-lg">${cat}</div>
-                                    <div class="text-gray-600 text-sm mt-1">
-                                        ${tools.filter(t => t.category === cat).length} tools
-                                    </div>
-                                </button>
-                            `).join('')}
+                    <div class="max-w-7xl mx-auto">
+                        <h2 class="text-3xl font-bold mb-8">⭐ Featured Tools</h2>
+                        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                            ${featuredTools.map(tool => renderToolCard(tool)).join('')}
                         </div>
                     </div>
                 </div>
@@ -954,18 +1682,10 @@
                 <div class="py-16 px-4">
                     <div class="max-w-2xl mx-auto bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-8 text-white text-center">
                         <h2 class="text-3xl font-bold mb-4">Stay Updated</h2>
-                        <p class="mb-6 opacity-90">Get weekly updates on new tools and exclusive deals</p>
-                        <form class="flex gap-2 max-w-md mx-auto" onsubmit="handleNewsletterSubmit(this); return false;">
-                            <input 
-                                type="email" 
-                                name="email"
-                                placeholder="your@email.com" 
-                                required
-                                class="flex-1 px-4 py-3 rounded-lg text-gray-900"
-                            />
-                            <button type="submit" class="bg-white text-indigo-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 whitespace-nowrap">
-                                Subscribe
-                            </button>
+                        <p class="mb-6 opacity-90">Get weekly updates on new tools</p>
+                        <form class="flex gap-2 max-w-md mx-auto" onsubmit="event.preventDefault(); subscribeNewsletter(this.email.value).then(() => this.reset());">
+                            <input type="email" name="email" placeholder="your@email.com" required class="flex-1 px-4 py-3 rounded-lg text-gray-900" />
+                            <button type="submit" class="bg-white text-indigo-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100">Subscribe</button>
                         </form>
                     </div>
                 </div>
@@ -976,103 +1696,35 @@
             const filtered = filterTools();
             return `
                 <div class="max-w-7xl mx-auto px-4 py-8">
-                    <div class="flex items-center justify-between mb-8 flex-wrap gap-4">
-                        <h1 class="text-4xl font-bold">All Tools</h1>
-                        <div class="flex gap-2 items-center text-sm text-gray-600">
-                            <span>Sort by:</span>
-                            <select 
-                                class="px-3 py-1 border rounded-lg bg-white"
-                                onchange="state.sortBy=this.value; render()">
-                                <option value="featured" ${state.sortBy === 'featured' ? 'selected' : ''}>Featured First</option>
-                                <option value="name" ${state.sortBy === 'name' ? 'selected' : ''}>Name (A-Z)</option>
-                            </select>
-                        </div>
-                    </div>
+                    <h1 class="text-4xl font-bold mb-8">All Tools</h1>
                     
                     <div class="mb-6">
-                        <div class="relative">
-                            <input 
-                                type="search" 
-                                placeholder="Search tools by name, category, or feature..." 
-                                class="w-full px-4 py-3 pl-12 border-2 border-gray-200 rounded-lg focus:border-indigo-500"
-                                oninput="state.searchTerm=this.value; render()"
-                                value="${state.searchTerm}"
-                            />
-                            <svg class="w-5 h-5 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <circle cx="11" cy="11" r="8" stroke-width="2"/>
-                                <path d="M21 21l-4.35-4.35" stroke-width="2" stroke-linecap="round"/>
-                            </svg>
-                            ${state.searchTerm ? `
-                                <button 
-                                    onclick="state.searchTerm=''; render()" 
-                                    class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round"/>
-                                    </svg>
-                                </button>
-                            ` : ''}
-                        </div>
+                        <input type="search" placeholder="Search tools..." class="w-full px-4 py-3 border rounded-lg" oninput="state.searchTerm=this.value; render()" value="${state.searchTerm}" />
                     </div>
 
-                    <div class="mb-6">
-                        <div class="flex flex-wrap gap-2">
-                            ${categories.map(cat => `
-                                <button 
-                                    onclick="state.selectedCategory='${cat}'; render()"
-                                    class="px-4 py-2 rounded-full border-2 font-medium transition ${state.selectedCategory === cat ? 'bg-indigo-600 text-white border-indigo-600' : 'border-gray-200 hover:border-indigo-300'}">
-                                    ${cat === 'All' ? cat : `${getCategoryEmoji(cat)} ${cat}`}
-                                </button>
-                            `).join('')}
-                        </div>
-                    </div>
-
-                    <div class="mb-6 flex items-center justify-between">
-                        <div class="text-gray-600">
-                            Showing <strong>${filtered.length}</strong> tool${filtered.length !== 1 ? 's' : ''}
-                            ${state.searchTerm ? ` for "<strong>${state.searchTerm}</strong>"` : ''}
-                        </div>
-                        ${state.selectedCategory !== 'All' || state.searchTerm ? `
-                            <button 
-                                onclick="state.selectedCategory='All'; state.searchTerm=''; render()" 
-                                class="text-indigo-600 hover:text-indigo-700 text-sm font-medium">
-                                Clear filters ✕
+                    <div class="mb-6 flex flex-wrap gap-2">
+                        ${categories.map(cat => `
+                            <button onclick="state.selectedCategory='${cat}'; render()" class="px-4 py-2 rounded-full border-2 font-medium ${state.selectedCategory === cat ? 'bg-indigo-600 text-white border-indigo-600' : 'border-gray-200 hover:border-indigo-300'}">
+                                ${cat}
                             </button>
-                        ` : ''}
+                        `).join('')}
                     </div>
 
-                    ${filtered.length > 0 ? `
-                        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                            ${filtered.map(tool => renderToolCard(tool)).join('')}
-                        </div>
-                    ` : `
-                        <div class="text-center py-16">
-                            <div class="text-6xl mb-4">🔍</div>
-                            <h3 class="text-xl font-semibold mb-2">No tools found</h3>
-                            <p class="text-gray-600 mb-4">Try adjusting your search or filters</p>
-                            <button 
-                                onclick="state.selectedCategory='All'; state.searchTerm=''; render()" 
-                                class="text-indigo-600 hover:text-indigo-700 font-medium">
-                                View all tools →
-                            </button>
-                        </div>
-                    `}
+                    <div class="mb-4 text-gray-600">Showing ${filtered.length} tool${filtered.length !== 1 ? 's' : ''}</div>
+
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        ${filtered.map(tool => renderToolCard(tool)).join('')}
+                    </div>
                 </div>
             `;
         }
 
         function renderFavoritesPage() {
             const favoriteTools = tools.filter(t => state.favorites.includes(t.name));
-            
             return `
                 <div class="max-w-7xl mx-auto px-4 py-8">
-                    <h1 class="text-4xl font-bold mb-8 flex items-center gap-2">
-                        <span>❤️</span> My Favorites
-                    </h1>
-                    
+                    <h1 class="text-4xl font-bold mb-8">❤️ My Favorites</h1>
                     ${favoriteTools.length > 0 ? `
-                        <div class="mb-6 text-gray-600">
-                            You have <strong>${favoriteTools.length}</strong> favorite tool${favoriteTools.length !== 1 ? 's' : ''}
-                        </div>
                         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
                             ${favoriteTools.map(tool => renderToolCard(tool)).join('')}
                         </div>
@@ -1080,12 +1732,7 @@
                         <div class="text-center py-16">
                             <div class="text-6xl mb-4">💔</div>
                             <h3 class="text-xl font-semibold mb-2">No favorites yet</h3>
-                            <p class="text-gray-600 mb-4">Start adding tools you love by clicking the heart icon</p>
-                            <button 
-                                onclick="showPage('directory')" 
-                                class="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700">
-                                Browse Tools
-                            </button>
+                            <button onclick="showPage('directory')" class="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700">Browse Tools</button>
                         </div>
                     `}
                 </div>
@@ -1096,188 +1743,44 @@
             return `
                 <div class="max-w-2xl mx-auto px-4 py-8">
                     <h1 class="text-4xl font-bold mb-4">Submit a Tool</h1>
-                    <p class="text-gray-600 mb-8">Know a great SaaS tool? Share it with the community!</p>
-
-                    <form onsubmit="handleToolSubmit(this); return false;" class="space-y-6 bg-white border rounded-lg p-6">
-                        <div>
-                            <label class="block text-sm font-semibold mb-2">Tool Name *</label>
-                            <input type="text" name="toolName" required class="w-full px-4 py-2 border rounded-lg" placeholder="e.g. Notion">
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-semibold mb-2">Website URL *</label>
-                            <input type="url" name="website" required class="w-full px-4 py-2 border rounded-lg" placeholder="https://...">
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-semibold mb-2">Category *</label>
-                            <select name="category" required class="w-full px-4 py-2 border rounded-lg">
-                                <option value="">Select a category</option>
-                                ${categories.slice(1).map(cat => `<option value="${cat}">${cat}</option>`).join('')}
-                            </select>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-semibold mb-2">One-line Description *</label>
-                            <input type="text" name="tagline" required class="w-full px-4 py-2 border rounded-lg" placeholder="What does it do in one sentence?">
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-semibold mb-2">Full Description *</label>
-                            <textarea name="description" required rows="4" class="w-full px-4 py-2 border rounded-lg" placeholder="Tell us more about this tool..."></textarea>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-semibold mb-2">Pricing *</label>
-                            <input type="text" name="pricing" required class="w-full px-4 py-2 border rounded-lg" placeholder="e.g. Free / $10/mo">
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-semibold mb-2">Your Email (for follow-up)</label>
-                            <input type="email" name="email" class="w-full px-4 py-2 border rounded-lg" placeholder="your@email.com">
-                        </div>
-
-                        <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 font-semibold">
-                            Submit Tool for Review
-                        </button>
-
-                        <p class="text-sm text-gray-600 text-center">We'll review your submission and add it if it's a good fit!</p>
+                    <p class="text-gray-600 mb-8">Know a great SaaS tool? Share it!</p>
+                    <form onsubmit="event.preventDefault(); const fd = new FormData(this); submitTool(Object.fromEntries(fd)).then(() => { this.reset(); showPage('directory'); });" class="space-y-6 bg-white border rounded-lg p-6">
+                        <div><label class="block text-sm font-semibold mb-2">Tool Name *</label><input type="text" name="toolName" required class="w-full px-4 py-2 border rounded-lg" /></div>
+                        <div><label class="block text-sm font-semibold mb-2">Website *</label><input type="url" name="website" required class="w-full px-4 py-2 border rounded-lg" /></div>
+                        <div><label class="block text-sm font-semibold mb-2">Category *</label><select name="category" required class="w-full px-4 py-2 border rounded-lg"><option value="">Select</option>${categories.slice(1).map(c => `<option value="${c}">${c}</option>`).join('')}</select></div>
+                        <div><label class="block text-sm font-semibold mb-2">Description *</label><textarea name="description" required rows="4" class="w-full px-4 py-2 border rounded-lg"></textarea></div>
+                        <div><label class="block text-sm font-semibold mb-2">Pricing *</label><input type="text" name="pricing" required class="w-full px-4 py-2 border rounded-lg" /></div>
+                        <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 font-semibold">Submit Tool</button>
                     </form>
-                </div>
-            `;
-        }
-
-        function renderBlogPage() {
-            return `
-                <div class="max-w-7xl mx-auto px-4 py-8">
-                    <h1 class="text-4xl font-bold mb-8">Blog</h1>
-                    <div class="text-center py-16">
-                        <div class="text-6xl mb-4">📝</div>
-                        <h3 class="text-xl font-semibold mb-2">Blog coming soon!</h3>
-                        <p class="text-gray-600">We're working on great content about SaaS tools</p>
-                    </div>
                 </div>
             `;
         }
 
         function renderToolCard(tool) {
             const isFavorite = state.favorites.includes(tool.name);
-            const avgRating = getAverageRating(tool.name);
-            const reviewCount = (state.reviews[tool.name] || []).length;
-            
             return `
-                <article class="tool-card bg-white border border-gray-200 rounded-lg hover:shadow-lg h-full flex flex-col">
-                    <div class="p-4 border-b border-gray-100">
+                <div class="tool-card bg-white border rounded-lg hover:shadow-lg h-full flex flex-col">
+                    <div class="p-4 border-b">
                         <div class="flex items-center justify-between mb-2">
                             <div class="text-3xl">${tool.logo}</div>
-                            <div class="flex gap-2 items-center">
-                                ${tool.featured ? '<span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded font-semibold">⭐</span>' : ''}
-                                <button 
-                                    onclick="event.stopPropagation(); toggleFavorite('${tool.name}')"
-                                    class="text-2xl hover:scale-110 transition-transform">
-                                    ${isFavorite ? '❤️' : '🤍'}
-                                </button>
-                            </div>
+                            <button onclick="event.stopPropagation(); toggleFavorite('${tool.name}')" class="text-2xl">${isFavorite ? '❤️' : '🤍'}</button>
                         </div>
                         <h3 class="font-bold text-lg mb-1">${tool.name}</h3>
-                        <p class="text-gray-600 text-xs mb-2">${tool.tagline}</p>
-                        ${avgRating > 0 ? `
-                            <div class="flex items-center gap-1 text-sm">
-                                <span class="text-yellow-500">${'⭐'.repeat(Math.round(avgRating))}</span>
-                                <span class="text-gray-600">${avgRating} (${reviewCount})</span>
-                            </div>
-                        ` : ''}
+                        <p class="text-gray-600 text-xs">${tool.tagline}</p>
                     </div>
-                    
                     <div class="p-4 flex-1 flex flex-col">
                         <p class="text-gray-700 text-sm mb-4 line-clamp-2 flex-1">${tool.description}</p>
-                        
                         <div class="space-y-3">
-                            <div class="flex items-center justify-between text-sm flex-wrap gap-2">
+                            <div class="flex items-center justify-between text-sm">
                                 <span class="text-green-600 font-bold text-xs">💰 ${tool.pricing}</span>
                                 <span class="text-xs bg-gray-100 px-2 py-1 rounded">${tool.category}</span>
                             </div>
-                            
                             ${tool.iUseThis ? '<span class="inline-flex items-center gap-1 bg-green-50 text-green-700 px-2 py-1 rounded text-xs font-semibold border border-green-200">✓ I use this</span>' : ''}
-                            
                             <div class="flex gap-2">
-                                <button 
-                                    onclick="openToolModal(${JSON.stringify(tool).replace(/"/g, '&quot;')})"
-                                    class="flex-1 border-2 border-indigo-600 text-indigo-600 py-2 rounded-lg hover:bg-indigo-50 font-semibold text-sm">
-                                    Details
-                                </button>
-                                <a 
-                                    href="${tool.website}" 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    class="flex-1 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 font-semibold text-sm text-center">
-                                    Visit →
-                                </a>
+                                <button onclick="openToolModal(${JSON.stringify(tool).replace(/"/g, '&quot;')})" class="flex-1 border-2 border-indigo-600 text-indigo-600 py-2 rounded-lg hover:bg-indigo-50 font-semibold text-sm">Details</button>
+                                <a href="${tool.website}" target="_blank" class="flex-1 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 font-semibold text-sm text-center">Visit →</a>
                             </div>
                         </div>
-                    </div>
-                </article>
-            `;
-        }
-
-        function renderReviewSection(tool) {
-            const reviews = state.reviews[tool.name] || [];
-            const avgRating = getAverageRating(tool.name);
-            
-            return `
-                <div class="border-t pt-6 mt-6">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-xl font-bold">User Reviews</h3>
-                        <div class="flex items-center gap-2">
-                            <span class="text-2xl">${avgRating > 0 ? '⭐'.repeat(Math.round(avgRating)) : '☆☆☆☆☆'}</span>
-                            <span class="text-gray-600">${avgRating > 0 ? avgRating : 'No reviews yet'} ${reviews.length > 0 ? `(${reviews.length})` : ''}</span>
-                        </div>
-                    </div>
-
-                    <form onsubmit="handleReviewSubmit('${tool.name}', this); return false;" class="bg-gray-50 p-4 rounded-lg mb-6">
-                        <h4 class="font-semibold mb-3">Write a Review</h4>
-                        <div class="space-y-3">
-                            <div>
-                                <label class="block text-sm font-medium mb-1">Your Name (optional)</label>
-                                <input type="text" name="userName" placeholder="John Doe" class="w-full px-3 py-2 border rounded-lg">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-1">Rating *</label>
-                                <select name="rating" required class="w-full px-3 py-2 border rounded-lg">
-                                    <option value="">Select rating</option>
-                                    <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
-                                    <option value="4">⭐⭐⭐⭐ Good</option>
-                                    <option value="3">⭐⭐⭐ Average</option>
-                                    <option value="2">⭐⭐ Poor</option>
-                                    <option value="1">⭐ Terrible</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-1">Your Review *</label>
-                                <textarea name="comment" required rows="3" placeholder="What do you think about this tool?" class="w-full px-3 py-2 border rounded-lg"></textarea>
-                            </div>
-                            <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 font-medium">
-                                Submit Review
-                            </button>
-                        </div>
-                    </form>
-
-                    <div class="space-y-4">
-                        ${reviews.length > 0 ? reviews.map(review => `
-                            <div class="border-b pb-4">
-                                <div class="flex items-start justify-between mb-2">
-                                    <div>
-                                        <div class="font-semibold">${review.userName}</div>
-                                        <div class="text-sm text-gray-600">${new Date(review.date).toLocaleDateString()}</div>
-                                    </div>
-                                    <div class="text-yellow-500">${'⭐'.repeat(review.rating)}</div>
-                                </div>
-                                <p class="text-gray-700 mb-2">${review.comment}</p>
-                                <button onclick="markReviewHelpful('${tool.name}', ${review.id})" class="text-sm text-gray-600 hover:text-indigo-600">
-                                    👍 Helpful (${review.helpful})
-                                </button>
-                            </div>
-                        `).join('') : '<p class="text-gray-500 text-center py-4">No reviews yet. Be the first to review!</p>'}
                     </div>
                 </div>
             `;
@@ -1285,178 +1788,95 @@
 
         function renderModal() {
             if (!state.showModal || !state.selectedTool) return '';
-            
             const tool = state.selectedTool;
             const isFavorite = state.favorites.includes(tool.name);
+            const reviews = state.reviews[tool.name] || [];
+            const avgRating = getAverageRating(tool.name);
             
             return `
-                <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onclick="if(event.target === this) closeModal()">
-                    <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl" onclick="event.stopPropagation()">
-                        <div class="sticky top-0 bg-white border-b p-6 flex items-center justify-between z-10">
+                <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onclick="if(event.target === this) closeModal()">
+                    <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+                        <div class="sticky top-0 bg-white border-b p-6 flex items-center justify-between">
                             <div class="flex items-center gap-3">
                                 <span class="text-4xl">${tool.logo}</span>
-                                <div>
-                                    <h2 class="text-2xl font-bold">${tool.name}</h2>
-                                    <p class="text-gray-600">${tool.tagline}</p>
-                                </div>
+                                <div><h2 class="text-2xl font-bold">${tool.name}</h2><p class="text-gray-600">${tool.tagline}</p></div>
                             </div>
-                            <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 p-2">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round"/>
-                                </svg>
-                            </button>
+                            <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 p-2">✕</button>
                         </div>
-                        
                         <div class="p-6 space-y-6">
-                            <div>
-                                <h3 class="font-semibold mb-2">About</h3>
-                                <p class="text-gray-700">${tool.description}</p>
-                            </div>
-                            
+                            <div><h3 class="font-semibold mb-2">About</h3><p class="text-gray-700">${tool.description}</p></div>
                             <div class="grid sm:grid-cols-2 gap-4">
-                                <div class="bg-gray-50 p-4 rounded-lg">
-                                    <div class="text-sm text-gray-600 mb-1">Category</div>
-                                    <div class="font-semibold">${getCategoryEmoji(tool.category)} ${tool.category}</div>
-                                </div>
-                                <div class="bg-gray-50 p-4 rounded-lg">
-                                    <div class="text-sm text-gray-600 mb-1">Pricing</div>
-                                    <div class="font-semibold text-green-600">💰 ${tool.pricing}</div>
-                                </div>
+                                <div class="bg-gray-50 p-4 rounded-lg"><div class="text-sm text-gray-600 mb-1">Category</div><div class="font-semibold">${tool.category}</div></div>
+                                <div class="bg-gray-50 p-4 rounded-lg"><div class="text-sm text-gray-600 mb-1">Pricing</div><div class="font-semibold text-green-600">💰 ${tool.pricing}</div></div>
                             </div>
-
-                            <div>
-                                <h3 class="font-semibold mb-3">Share this tool</h3>
+                            <div><h3 class="font-semibold mb-3">Share</h3>
                                 <div class="flex gap-2">
-                                    <button onclick="shareOnTwitter(${JSON.stringify(tool).replace(/"/g, '&quot;')})" class="flex-1 bg-[#1DA1F2] text-white py-2 px-4 rounded-lg hover:opacity-90 font-medium">
-                                        Twitter
-                                    </button>
-                                    <button onclick="shareOnLinkedIn(${JSON.stringify(tool).replace(/"/g, '&quot;')})" class="flex-1 bg-[#0077B5] text-white py-2 px-4 rounded-lg hover:opacity-90 font-medium">
-                                        LinkedIn
-                                    </button>
-                                    <button onclick="copyLink(${JSON.stringify(tool).replace(/"/g, '&quot;')})" class="bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 font-medium">
-                                        📋 Copy
-                                    </button>
+                                    <button onclick="shareOnTwitter(${JSON.stringify(tool).replace(/"/g, '&quot;')})" class="flex-1 bg-blue-500 text-white py-2 rounded-lg">Twitter</button>
+                                    <button onclick="shareOnLinkedIn(${JSON.stringify(tool).replace(/"/g, '&quot;')})" class="flex-1 bg-blue-700 text-white py-2 rounded-lg">LinkedIn</button>
+                                    <button onclick="copyLink()" class="bg-gray-600 text-white py-2 px-4 rounded-lg">📋</button>
                                 </div>
                             </div>
-                            
                             <div class="flex gap-3">
-                                <button 
-                                    onclick="toggleFavorite('${tool.name}')"
-                                    class="flex-1 border-2 border-gray-200 py-3 rounded-lg hover:border-indigo-500 font-semibold flex items-center justify-center gap-2">
-                                    ${isFavorite ? '❤️ Saved' : '🤍 Save'}
-                                </button>
-                                <a 
-                                    href="${tool.website}" 
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="flex-1 bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 font-semibold text-center">
-                                    Visit Website →
-                                </a>
+                                <button onclick="toggleFavorite('${tool.name}')" class="flex-1 border-2 py-3 rounded-lg font-semibold">${isFavorite ? '❤️ Saved' : '🤍 Save'}</button>
+                                <a href="${tool.website}" target="_blank" class="flex-1 bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 font-semibold text-center">Visit Website →</a>
                             </div>
-
-                            ${renderReviewSection(tool)}
+                            <div class="border-t pt-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-xl font-bold">Reviews</h3>
+                                    <span>${avgRating > 0 ? '⭐'.repeat(Math.round(avgRating)) + ' ' + avgRating : 'No reviews'}</span>
+                                </div>
+                                <form onsubmit="event.preventDefault(); const fd = new FormData(this); submitReview('${tool.name}', fd.get('rating'), fd.get('comment'), fd.get('userName')); this.reset();" class="bg-gray-50 p-4 rounded-lg mb-6 space-y-3">
+                                    <input type="text" name="userName" placeholder="Your name (optional)" class="w-full px-3 py-2 border rounded-lg" />
+                                    <select name="rating" required class="w-full px-3 py-2 border rounded-lg"><option value="">Rating</option><option value="5">⭐⭐⭐⭐⭐</option><option value="4">⭐⭐⭐⭐</option><option value="3">⭐⭐⭐</option><option value="2">⭐⭐</option><option value="1">⭐</option></select>
+                                    <textarea name="comment" required rows="3" placeholder="Your review" class="w-full px-3 py-2 border rounded-lg"></textarea>
+                                    <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700">Submit Review</button>
+                                </form>
+                                <div class="space-y-4">
+                                    ${reviews.map(r => `<div class="border-b pb-4"><div class="flex justify-between mb-2"><div><div class="font-semibold">${r.userName}</div><div class="text-sm text-gray-600">${new Date(r.date).toLocaleDateString()}</div></div><div>${'⭐'.repeat(r.rating)}</div></div><p class="text-gray-700">${r.comment}</p></div>`).join('') || '<p class="text-gray-500 text-center py-4">No reviews yet</p>'}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             `;
         }
 
-        function renderFooter() {
-            return `
-                <footer class="bg-gray-900 text-white py-12 px-4 mt-16">
-                    <div class="max-w-6xl mx-auto">
-                        <div class="grid md:grid-cols-4 gap-8 mb-8">
-                            <div>
-                                <div class="flex items-center gap-2 mb-4">
-                                    <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <circle cx="12" cy="12" r="10" stroke-width="2"/>
-                                        <path d="M12 8v8m4-4H8" stroke-width="2" stroke-linecap="round"/>
-                                    </svg>
-                                    <h3 class="font-bold text-lg">ToolScout</h3>
-                                </div>
-                                <p class="text-gray-400 text-sm">Curated directory of quality SaaS tools for founders and small teams.</p>
-                            </div>
-                            
-                            <div>
-                                <h4 class="font-semibold mb-3">Explore</h4>
-                                <ul class="space-y-2 text-sm">
-                                    <li><button onclick="showPage('home')" class="text-gray-400 hover:text-white">Home</button></li>
-                                    <li><button onclick="showPage('directory')" class="text-gray-400 hover:text-white">Directory</button></li>
-                                    <li><button onclick="showPage('blog')" class="text-gray-400 hover:text-white">Blog</button></li>
-                                    <li><button onclick="showPage('submit')" class="text-gray-400 hover:text-white">Submit Tool</button></li>
-                                </ul>
-                            </div>
-                            
-                            <div>
-                                <h4 class="font-semibold mb-3">Categories</h4>
-                                <ul class="space-y-2 text-sm">
-                                    ${categories.slice(1, 5).map(cat => `
-                                        <li><button onclick="state.selectedCategory='${cat}'; showPage('directory')" class="text-gray-400 hover:text-white">${cat}</button></li>
-                                    `).join('')}
-                                </ul>
-                            </div>
-                            
-                            <div>
-                                <h4 class="font-semibold mb-3">Connect</h4>
-                                <ul class="space-y-2 text-sm">
-                                    <li><a href="mailto:hello@toolscout.co" class="text-gray-400 hover:text-white">Contact</a></li>
-                                    <li><button onclick="showPage('submit')" class="text-gray-400 hover:text-white">Submit a Tool</button></li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-400">
-                            <p>© 2025 ToolScout. Built with ❤️ by Jakub.</p>
-                            <p class="mt-2">Some links are affiliate links. We may earn a commission at no extra cost to you.</p>
-                        </div>
-                    </div>
-                </footer>
-            `;
-        }
-
-        function getCategoryEmoji(cat) {
-            const emojis = {
-                'Productivity': '📝',
-                'Developer Tools': '💻',
-                'Marketing': '📧',
-                'Design': '🎨',
-                'Analytics': '📊',
-                'Finance': '💰',
-                'AI Tools': '🤖',
-                'Communication': '💬',
-                'Security': '🔐',
-                'E-commerce': '🛒',
-                'Automation': '⚡',
-                'SEO & Content': '🔍'
-            };
-            return emojis[cat] || '📦';
-        }
-
         function showPage(page) {
             state.currentPage = page;
-            history.pushState({page}, '', page === 'home' ? '/' : `/${page}`);
             render();
         }
 
-        window.addEventListener('popstate', (event) => {
-            if (event.state && event.state.page) {
-                state.currentPage = event.state.page;
-                render();
-            }
-        });
-
-        // Event handlers
-        function handleReviewSubmit(toolName, form) {
-            const formData = new FormData(form);
-            submitReview(
-                toolName,
-                formData.get('rating'),
-                formData.get('comment'),
-                formData.get('userName')
-            );
-            form.reset();
+        function render() {
+            const app = document.getElementById('app');
+            let content = '';
+            if (state.currentPage === 'home') content = renderHomePage();
+            else if (state.currentPage === 'directory') content = renderDirectoryPage();
+            else if (state.currentPage === 'favorites') content = renderFavoritesPage();
+            else if (state.currentPage === 'submit') content = renderSubmitPage();
+            
+            app.innerHTML = renderNav() + content + renderModal() + `
+                <footer class="bg-gray-900 text-white py-12 px-4 mt-16">
+                    <div class="max-w-6xl mx-auto text-center">
+                        <h3 class="font-bold text-lg mb-4">ToolScout</h3>
+                        <p class="text-gray-400 text-sm mb-4">Curated SaaS tools for founders and small teams</p>
+                        <p class="text-gray-400 text-sm">© 2025 ToolScout. Built by Jakub.</p>
+                    </div>
+                </footer>
+            `;
+            window.scrollTo(0, 0);
         }
 
-        function handleNewsletterSubmit(form) {
-            const formData = new FormData(form);
-            const email = formData.get('email');
+        window.showPage = showPage;
+        window.toggleFavorite = toggleFavorite;
+        window.openToolModal = openToolModal;
+        window.closeModal = closeModal;
+        window.subscribeNewsletter = subscribeNewsletter;
+        window.shareOnTwitter = shareOnTwitter;
+        window.shareOnLinkedIn = shareOnLinkedIn;
+        window.copyLink = copyLink;
+
+        render();
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
