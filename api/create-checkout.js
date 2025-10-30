@@ -1,7 +1,16 @@
 const Stripe = require('stripe');
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 module.exports = async function handler(req, res) {
+  // 🔍 DEBUG: Log environment variable status
+  console.log('=== ENVIRONMENT DEBUG ===');
+  console.log('STRIPE_SECRET_KEY exists:', !!process.env.STRIPE_SECRET_KEY);
+  console.log('STRIPE_SECRET_KEY prefix:', process.env.STRIPE_SECRET_KEY?.substring(0, 10));
+  console.log('All env keys:', Object.keys(process.env).filter(k => k.includes('STRIPE')));
+  console.log('========================');
+
+  // Initialize Stripe AFTER logging
+  const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
