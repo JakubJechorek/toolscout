@@ -2668,36 +2668,36 @@
             render();
         }
 
-        async function checkout() {
-            if (state.cart.length === 0) {
-                alert('Your cart is empty!');
-                return;
-            }
+async function checkout() {
+    if (state.cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+    }
 
-            try {
-                const response = await fetch('/api/create-checkout', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        items: state.cart.map(id => {
-                            const prompt = prompts.find(p => p.id === id);
-                            return {
-                                id: prompt.id,
-                                name: prompt.name,
-                                price: prompt.price
-                            };
-                        })
-                    })
-                });
+    try {
+        const response = await fetch('/api/create-checkout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                items: state.cart.map(id => {
+                    const prompt = prompts.find(p => p.id === id);
+                    return {
+                        id: prompt.id,
+                        name: prompt.name,
+                        price: prompt.price
+                    };
+                })
+            })
+        });
 
-                const { sessionId } = await response.json();
-                const stripe = Stripe('pk_test_51SNxy2Rscss1pDQp11jHH7r4yXkfo4aojaTkRwnJX1LoV8UwwOV6yLw19SeMYhZ7cnTQWDhvepUVRaLeMKeahRwT00ng0RZFhg');
-                await stripe.redirectToCheckout({ sessionId });
-            } catch (error) {
-                alert('Checkout error. Please try again.');
-                console.error(error);
-            }
-        }
+        const { sessionId } = await response.json();
+        const stripe = Stripe('pk_test_51SNxy2Rscss1pDQp11jHH7r4yXkfo4aojaTkRwnJX1LoV8UwwOV6yLw19SeMYhZ7cnTQWDhvepUVRaLeMKeahRwT00ng0RZFhg');
+        await stripe.redirectToCheckout({ sessionId });
+    } catch (error) {
+        alert('Checkout error. Please try again.');
+        console.error(error);
+    }
+}
 
         function showNotification(message) {
             const notif = document.createElement('div');
