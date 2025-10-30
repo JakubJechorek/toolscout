@@ -1,31 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Basic Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>ToolScout - Discover 200+ Best SaaS Tools for Startups & Founders</title>
+    <meta name="title" content="ToolScout - Discover 200+ Best SaaS Tools for Startups & Founders">
+    <meta name="description" content="Curated directory of 200+ quality SaaS tools for founders, freelancers, and small teams. Find the perfect tools to build and grow your business.">
+    <meta name="keywords" content="saas tools, startup tools, productivity tools, founder tools, software directory, saas directory">
+    <meta name="author" content="ToolScout">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolscout.co/">
+    <meta property="og:title" content="ToolScout - 200+ Best SaaS Tools for Founders">
+    <meta property="og:description" content="Curated directory of quality SaaS tools for founders, freelancers, and small teams. Find the perfect tools to build and grow your business.">
+    <meta property="og:image" content="https://toolscout.co/og-image.png">
+    <meta property="og:site_name" content="ToolScout">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://toolscout.co/">
+    <meta name="twitter:title" content="ToolScout - 200+ Best SaaS Tools for Founders">
+    <meta name="twitter:description" content="Curated directory of quality SaaS tools for founders, freelancers, and small teams.">
+    <meta name="twitter:image" content="https://toolscout.co/og-image.png">
+    
+    <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="shortcut icon" href="/favicon.ico">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    
+    <!-- Verification -->
     <meta name='impact-site-verification' value='cd79d5cc-bd58-4a2d-8434-9262c7f49a45'>
-    <meta property="og:title" content="ToolScout - 200+ Best SaaS Tools">
-    <meta property="og:description" content="Curated SaaS directory">
-    <meta property="og:image" content="https://toolscout.co/og-image.png">
-    <meta property="og:url" content="https://toolscout.co">
-    <meta name="twitter:card" content="summary_large_image">
-    <title>ToolScout - Discover 200+ Best SaaS Tools for Startups</title>
-    <meta name="description" content="Curated directory of 200+ quality SaaS tools for founders, freelancers, and small teams.">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://toolscout.co/">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-     <style>
+    
+    <!-- Custom Styles -->
+    <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
         .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .tool-card { transition: all 0.3s ease; }
         .tool-card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
     </style>
+    
+    <!-- Structured Data / Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "ToolScout",
+      "url": "https://toolscout.co",
+      "description": "Curated directory of 200+ SaaS tools for founders, freelancers, and small teams",
+      "publisher": {
+        "@type": "Organization",
+        "name": "ToolScout",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://toolscout.co/logo.png"
+        }
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://toolscout.co/?search={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
 </head>
 <body class="bg-white">
     <div id="app"></div>
-
     <script type="module">
         const tools = [
             // ===== PRODUCTIVITY =====
