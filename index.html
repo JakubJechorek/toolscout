@@ -2729,7 +2729,7 @@
                 });
 
                 const { sessionId } = await response.json();
-                const stripe = Stripe('YOUR_STRIPE_PUBLISHABLE_KEY'); // You'll add this
+                const stripe = Stripe('pk_test_51SNxy2Rscss1pDQp11jHH7r4yXkfo4aojaTkRwnJX1LoV8UwwOV6yLw19SeMYhZ7cnTQWDhvepUVRaLeMKeahRwT00ng0RZFhg'); // You'll add this
                 await stripe.redirectToCheckout({ sessionId });
             } catch (error) {
                 alert('Checkout error. Please try again.');
