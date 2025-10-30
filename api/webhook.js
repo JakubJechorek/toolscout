@@ -3,13 +3,6 @@ const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 const { Resend } = require('resend');
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Disable body parsing, need raw body for webhook signature
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
 // Helper to read raw body
 const getRawBody = (req) => {
   return new Promise((resolve, reject) => {
@@ -20,7 +13,7 @@ const getRawBody = (req) => {
   });
 };
 
-// Prompt delivery data (you'll store files somewhere accessible)
+// Prompt delivery data
 const PROMPT_DOWNLOAD_LINKS = {
   'marketing-master-pack': 'https://yourcdn.com/prompts/marketing-master-pack.pdf',
   'content-creator-bundle': 'https://yourcdn.com/prompts/content-creator-bundle.pdf',
@@ -56,7 +49,7 @@ module.exports = async (req, res) => {
       const customerEmail = session.customer_details.email;
       
       // Get purchased prompt IDs from metadata
-      const promptIds = session.metadata.promptIds.split(',');
+      const promptIds = session.metadata.items ? JSON.parse(session.metadata.items) : [];
       
       // Generate download links
       const downloadLinks = promptIds.map(id => ({
