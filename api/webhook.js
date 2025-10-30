@@ -15,7 +15,7 @@ const getRawBody = (req) => {
 
 // Prompt delivery data
 const PROMPT_DOWNLOAD_LINKS = {
-  'marketing-master-pack': 'https://yourcdn.com/prompts/marketing-master-pack.pdf',
+  'marketing-master-pack': 'https://o2obdsaoetrr1kv4.public.blob.vercel-storage.com/MARKETING%20MASTER%20PACK.docx',
   'content-creator-bundle': 'https://yourcdn.com/prompts/content-creator-bundle.pdf',
   'startup-founder-toolkit': 'https://yourcdn.com/prompts/startup-founder-toolkit.pdf',
   'coding-assistant-pro': 'https://yourcdn.com/prompts/coding-assistant-pro.pdf',
